@@ -2,7 +2,7 @@
 from pico2d import *
 
 import pikachu_world
-
+from pikachu_map_objects import *
 
 def handle_events():
     global running
@@ -16,6 +16,10 @@ def handle_events():
 
 def create_world():
     global running
+
+
+    sky_block = Sky_block()
+    pikachu_world.add(sky_block,0)
 
     running = True
 
