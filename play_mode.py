@@ -3,6 +3,7 @@ from pico2d import *
 import game_framework
 import pikachu_world
 from beach import Beach
+from pikachu_map_objects import *
 
 
 def handle_events():
@@ -18,6 +19,12 @@ def handle_events():
 def init():
     beach = Beach()
     pikachu_world.add_object(beach, 0)
+
+    net = Net()
+    pikachu_world.add_object(net, 2)
+
+    wave = Wave()
+    pikachu_world.add_object(wave, 1)
 
 
 def finish():

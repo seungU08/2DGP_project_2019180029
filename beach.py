@@ -8,4 +8,4 @@ class Beach:
         pass
 
     def draw(self):
-        self.image.draw(565,400)
+        self.image.draw(565,350)
