@@ -2,6 +2,7 @@ from pico2d import *
 
 import game_framework
 import pikachu_world
+import random
 from beach import Beach
 from pikachu_map_objects import *
 
@@ -26,6 +27,8 @@ def init():
     wave = Wave()
     pikachu_world.add_object(wave, 1)
 
+    clouds = [Cloud(random.randint(0,1130), random.randint(400,700)) for _ in range(10)]
+    pikachu_world.add_objects(clouds, 1)
 
 def finish():
     pikachu_world.clear()
