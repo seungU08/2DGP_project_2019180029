@@ -18,6 +18,7 @@ def handle_events():
             game_framework.quit()
 
 def init():
+    global beach, net, wave, clouds
     beach = Beach()
     pikachu_world.add_object(beach, 0)
 
