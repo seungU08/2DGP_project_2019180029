@@ -29,6 +29,9 @@ def up_up(e):
 def y_150(e):
     return e[0] == 'y==150'
 
+def l_down(e):
+    return e[0] == 'INPUT' and e[1].type == SDL_KEYDOWN and e[1].key == SDLK_l
+
 
 PIXEL_PER_METER = (10.0 / 0.3)
 RUN_SPEED_KMPH = 20.0
@@ -57,6 +60,8 @@ class Jump:
 
     @staticmethod
     def exit(pikachu, e):
+        if l_down(e):
+            pikachu.hit_ball()
         pass
 
     @staticmethod
@@ -92,6 +97,8 @@ class Run:
 
     @staticmethod
     def exit(pikachu, e):
+        if l_down(e):
+            pikachu.hit_ball()
         pass
 
     @staticmethod
@@ -125,6 +132,8 @@ class Idle:
 
     @staticmethod
     def exit(pikachu, e):
+        if l_down(e):
+            pikachu.hit_ball()
         pass
 
     @staticmethod
@@ -144,9 +153,9 @@ class StateMachine:
         self.pikachu = pikachu
         self.cur_state = Idle
         self.transitions = {
-            Idle: {right_down: Run, left_down: Run, left_up: Idle, right_up: Idle, up_down: Jump},
-            Run: {right_down: Idle, left_down: Idle, right_up: Idle, left_up: Idle, up_down: Jump},
-            Jump: {right_down: Jump, left_down: Jump, left_up: Jump, right_up: Jump, y_150: Idle}
+            Idle: {right_down: Run, left_down: Run, left_up: Idle, right_up: Idle, up_down: Jump, l_down: Idle},
+            Run: {right_down: Idle, left_down: Idle, right_up: Idle, left_up: Idle, up_down: Jump, l_down: Run},
+            Jump: {right_down: Jump, left_down: Jump, left_up: Jump, right_up: Jump, y_150: Idle, l_down: Jump}
         }
 
     def start(self):
@@ -191,3 +200,6 @@ class Pikachu:
 
     def draw(self):
         self.state_machine.draw()
+
+    def hit_ball(self):
+        pass
