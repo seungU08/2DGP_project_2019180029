@@ -4,6 +4,7 @@ import game_framework
 import pikachu_world
 import random
 from beach import Beach
+from monster_ball import Monster_ball
 from pikachu import Pikachu
 from pikachu_map_objects import *
 
@@ -35,6 +36,9 @@ def init():
 
     pikachu = Pikachu()
     pikachu_world.add_object(pikachu,2)
+
+    monster_ball = Monster_ball()
+    pikachu_world.add_object(monster_ball, 2)
 
 def finish():
     pikachu_world.clear()
