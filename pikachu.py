@@ -35,12 +35,14 @@ RUN_SPEED_PPS = (RUN_SPEED_MPS * PIXEL_PER_METER)
 
 TIME_PER_ACTION = 0.5
 ACTION_PER_TIME = 1.0 / TIME_PER_ACTION
-FRAMES_PER_ACTION = 5
+FRAMES_PER_ACTION = 7
 
 
 class Jump:
     @staticmethod
     def enter(pikachu, e):
+        pikachu.action = 2
+        FRAMES_PER_ACTION = 7
         pass
 
     @staticmethod
@@ -71,9 +73,16 @@ class Run:
 
     @staticmethod
     def do(pikachu):
-        pikachu.x += pikachu.dir * RUN_SPEED_PPS * game_framework.frame_time
-        pikachu.x = clamp(25, pikachu.x, 1600 - 25)
-        pikachu.frame = (pikachu.frame + FRAMES_PER_ACTION * ACTION_PER_TIME * game_framework.frame_time) % 5
+        if pikachu.x > 515:
+            pikachu.frame = (pikachu.frame + FRAMES_PER_ACTION * ACTION_PER_TIME * game_framework.frame_time) % 5
+            pikachu.x = 515
+        elif pikachu.x < 0:
+            pikachu.frame = (pikachu.frame + FRAMES_PER_ACTION * ACTION_PER_TIME * game_framework.frame_time) % 5
+            pikachu.x = 0
+        else:
+            pikachu.x += pikachu.dir * RUN_SPEED_PPS * game_framework.frame_time
+            pikachu.x = clamp(25, pikachu.x, 1600 - 25)
+            pikachu.frame = (pikachu.frame + FRAMES_PER_ACTION * ACTION_PER_TIME * game_framework.frame_time) % 5
         pass
 
     @staticmethod
