@@ -26,6 +26,9 @@ def up_down(e):
 def up_up(e):
     return e[0] == 'INPUT' and e[1].type == SDL_KEYUP and e[1].key == SDLK_UP
 
+def y_150(e):
+    return e[0] == 'y==150'
+
 
 PIXEL_PER_METER = (10.0 / 0.3)
 RUN_SPEED_KMPH = 20.0
@@ -41,8 +44,15 @@ FRAMES_PER_ACTION = 7
 class Jump:
     @staticmethod
     def enter(pikachu, e):
+        if right_down(e) or right_up(e):
+            pikachu.dir = 1
+        elif left_down(e) or left_up(e):
+            pikachu.dir = -1
+        elif up_up(e) or up_down(e):
+            pikachu.y_dir = 5
         pikachu.action = 2
-        FRAMES_PER_ACTION = 7
+
+
         pass
 
     @staticmethod
@@ -51,10 +61,21 @@ class Jump:
 
     @staticmethod
     def do(pikachu):
+        pikachu.frame = (pikachu.frame + FRAMES_PER_ACTION * ACTION_PER_TIME * game_framework.frame_time) % 4
+        pikachu.x += pikachu.dir * RUN_SPEED_PPS * game_framework.frame_time
+        pikachu.x = clamp(25, pikachu.x, 1600 - 25)
+        if pikachu.y_dir != 0:
+            pikachu.y = pikachu.y + pikachu.y_dir
+            pikachu.y_dir = pikachu.y_dir - 0.03
+        if pikachu.y < 150:
+            pikachu.y_dir = 0
+            pikachu.state_machine.handle_event(('y==150',0))
+
         pass
 
     @staticmethod
     def draw(pikachu):
+        pikachu.image.clip_draw(int(pikachu.frame) * 100, pikachu.action * 100, 100, 100, pikachu.x, pikachu.y)
         pass
 
 
@@ -62,9 +83,9 @@ class Run:
     @staticmethod
     def enter(pikachu, e):
         if right_down(e) or left_up(e):
-            pikachu.dir, pikachu.action, pikachu.face_dir = 1, 3, 1
+            pikachu.dir, pikachu.action = 1, 3
         elif left_down(e) or right_up(e):
-            pikachu.dir, pikachu.action, pikachu.face_dir = -1, 3, -1
+            pikachu.dir, pikachu.action = -1, 3
         pass
 
     @staticmethod
@@ -74,15 +95,15 @@ class Run:
     @staticmethod
     def do(pikachu):
         if pikachu.x > 515:
-            pikachu.frame = (pikachu.frame + FRAMES_PER_ACTION * ACTION_PER_TIME * game_framework.frame_time) % 5
+            pikachu.frame = (pikachu.frame + FRAMES_PER_ACTION * ACTION_PER_TIME * game_framework.frame_time) % 8
             pikachu.x = 515
         elif pikachu.x < 0:
-            pikachu.frame = (pikachu.frame + FRAMES_PER_ACTION * ACTION_PER_TIME * game_framework.frame_time) % 5
+            pikachu.frame = (pikachu.frame + FRAMES_PER_ACTION * ACTION_PER_TIME * game_framework.frame_time) % 8
             pikachu.x = 0
         else:
             pikachu.x += pikachu.dir * RUN_SPEED_PPS * game_framework.frame_time
             pikachu.x = clamp(25, pikachu.x, 1600 - 25)
-            pikachu.frame = (pikachu.frame + FRAMES_PER_ACTION * ACTION_PER_TIME * game_framework.frame_time) % 5
+            pikachu.frame = (pikachu.frame + FRAMES_PER_ACTION * ACTION_PER_TIME * game_framework.frame_time) % 8
         pass
 
     @staticmethod
@@ -98,7 +119,7 @@ class Idle:
         pikachu.dir = 0
         pikachu.frame = 0
 
-        pass
+
 
     @staticmethod
     def exit(pikachu, e):
@@ -106,7 +127,7 @@ class Idle:
 
     @staticmethod
     def do(pikachu):
-        pikachu.frame = (pikachu.frame + FRAMES_PER_ACTION * ACTION_PER_TIME * game_framework.frame_time) % 5
+        pikachu.frame = (pikachu.frame + FRAMES_PER_ACTION * ACTION_PER_TIME * game_framework.frame_time) % 8
 
         pass
 
@@ -121,9 +142,9 @@ class StateMachine:
         self.pikachu = pikachu
         self.cur_state = Idle
         self.transitions = {
-            Idle: {right_down: Run, left_down: Run, left_up: Run, right_up: Run, up_down: Jump},
-            Run: {right_down: Idle, left_down: Idle, right_up: Idle, left_up: Idle},
-            Jump: {}
+            Idle: {right_down: Run, left_down: Run, left_up: Idle, right_up: Idle, up_down: Jump},
+            Run: {right_down: Idle, left_down: Idle, right_up: Idle, left_up: Idle, up_down: Jump},
+            Jump: {right_down: Jump, left_down: Jump, left_up: Jump, right_up: Jump, y_150: Idle}
         }
 
     def start(self):
@@ -151,7 +172,7 @@ class Pikachu:
         self.x, self.y = 400, 150
         self.image = load_image('resource\\pikachu.png')
         self.frame = 0
-        self.face_dir = 1
+        self.y_dir = 0
         self.dir = 0
         self.action = 0
         self.state_machine = StateMachine(self)
