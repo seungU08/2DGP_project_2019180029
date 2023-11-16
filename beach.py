@@ -9,3 +9,9 @@ class Beach:
 
     def draw(self):
         self.image.draw(565,350)
+
+    def get_bb(self):
+        return 0, 0, 1150, 800
+
+    def handle_collision(self, group, a):
+        pass

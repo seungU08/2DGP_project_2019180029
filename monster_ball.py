@@ -22,9 +22,10 @@ class Monster_ball:
         self.frame = (self.frame + FRAMES_PER_ACTION * ACTION_PER_TIME * game_framework.frame_time) % 8
         self.y += self.dir_y * RUN_SPEED_PPS * game_framework.frame_time
         self.x += self.dir_x * RUN_SPEED_PPS * game_framework.frame_time
-        self.x = clamp(25, self.x, 1150 - 25)
-        self.y = clamp(150, self.y, 800 - 25)
+        self.x = clamp(25, self.x, 1150)
+        self.y = clamp(150, self.y, 700)
         self.dir_y = self.dir_y - 0.03
+
 
     def draw(self):
         self.image.clip_draw(int(self.frame) * 100, 0, 100, 100, self.x, self.y)
@@ -38,4 +39,6 @@ class Monster_ball:
         if group == 'pikachu:monster_ball':
             self.dir_x = self.dir_x - 2*self.dir_x
             self.dir_y = self.dir_y - 2*self.dir_y
+        if group == 'monster_ball:beach':
+            self.dir_x, self.dir_y = 0, 0
         pass

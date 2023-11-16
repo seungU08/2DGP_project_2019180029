@@ -54,8 +54,6 @@ class Jump:
         elif up_up(e) or up_down(e):
             pikachu.y_dir = 5
         pikachu.action = 2
-
-
         pass
 
     @staticmethod
@@ -68,7 +66,7 @@ class Jump:
     def do(pikachu):
         pikachu.frame = (pikachu.frame + FRAMES_PER_ACTION * ACTION_PER_TIME * game_framework.frame_time) % 4
         pikachu.x += pikachu.dir * RUN_SPEED_PPS * game_framework.frame_time
-        pikachu.x = clamp(50, pikachu.x, 565 - 50)
+        pikachu.x = clamp(50, pikachu.x, 515)
 
         if pikachu.y_dir != 0:
             pikachu.y += pikachu.y_dir * RUN_SPEED_PPS * game_framework.frame_time
@@ -102,17 +100,10 @@ class Run:
 
     @staticmethod
     def do(pikachu):
-        if pikachu.x > 515:
-            pikachu.frame = (pikachu.frame + FRAMES_PER_ACTION * ACTION_PER_TIME * game_framework.frame_time) % 8
-            pikachu.x = 515
-        elif pikachu.x < 0:
-            pikachu.frame = (pikachu.frame + FRAMES_PER_ACTION * ACTION_PER_TIME * game_framework.frame_time) % 8
-            pikachu.x = 0
-        else:
-            pikachu.x += pikachu.dir * RUN_SPEED_PPS * game_framework.frame_time
-            pikachu.x = clamp(25, pikachu.x, 1600 - 25)
-            pikachu.frame = (pikachu.frame + FRAMES_PER_ACTION * ACTION_PER_TIME * game_framework.frame_time) % 8
-        pass
+
+        pikachu.frame = (pikachu.frame + FRAMES_PER_ACTION * ACTION_PER_TIME * game_framework.frame_time) % 8
+        pikachu.x += pikachu.dir * RUN_SPEED_PPS * game_framework.frame_time
+        pikachu.x = clamp(25, pikachu.x, 515)
 
     @staticmethod
     def draw(pikachu):
