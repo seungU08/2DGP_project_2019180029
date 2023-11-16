@@ -45,6 +45,7 @@ def finish():
 
 def update():
     pikachu_world.update()
+    pikachu_world.handle_collisions()
 
 def draw():
     clear_canvas()
