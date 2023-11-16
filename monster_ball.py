@@ -14,8 +14,9 @@ FRAMES_PER_ACTION = 7
 class Monster_ball:
     def __init__(self):
         self.image = load_image('resource\\monster_ball.png')
-        self.x, self.y = 200,500
+        self.x, self.y = 200, 500
         self.frame = 0
+        self.dir_x, self.dir_y = 0, 0
 
     def update(self):
         self.frame = (self.frame + FRAMES_PER_ACTION * ACTION_PER_TIME * game_framework.frame_time) % 8
