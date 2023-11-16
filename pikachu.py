@@ -68,15 +68,14 @@ class Jump:
     def do(pikachu):
         pikachu.frame = (pikachu.frame + FRAMES_PER_ACTION * ACTION_PER_TIME * game_framework.frame_time) % 4
         pikachu.x += pikachu.dir * RUN_SPEED_PPS * game_framework.frame_time
-        pikachu.x = clamp(25, pikachu.x, 1600 - 25)
-        if pikachu.x > 515:
-            pikachu.x = 515
+        pikachu.x = clamp(50, pikachu.x, 565 - 50)
+
         if pikachu.y_dir != 0:
-            pikachu.y = pikachu.y + pikachu.y_dir
+            pikachu.y += pikachu.y_dir * RUN_SPEED_PPS * game_framework.frame_time
             pikachu.y_dir = pikachu.y_dir - 0.03
         if pikachu.y < 150:
             pikachu.y_dir = 0
-            pikachu.state_machine.handle_event(('y==150',0))
+            pikachu.state_machine.handle_event(('y==150', 0))
 
         pass
 
