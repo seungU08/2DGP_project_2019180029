@@ -24,3 +24,11 @@ class Monster_ball:
 
     def draw(self):
         self.image.clip_draw(int(self.frame) * 100, 0, 100, 100, self.x, self.y)
+        draw_rectangle(*self.get_bb())
+
+
+    def get_bb(self):
+        return self.x - 50, self.y - 50, self.x + 50, self.y + 50
+
+    def handle_collision(self, group, a):
+        pass

@@ -40,6 +40,10 @@ def init():
     monster_ball = Monster_ball()
     pikachu_world.add_object(monster_ball, 2)
 
+    pikachu_world.add_collision_pair('pikachu:monster_ball', pikachu, None)
+    pikachu_world.add_collision_pair('pikachu:monster_ball', None, monster_ball)
+
+
 def finish():
     pikachu_world.clear()
 

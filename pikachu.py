@@ -200,6 +200,15 @@ class Pikachu:
 
     def draw(self):
         self.state_machine.draw()
+        draw_rectangle(*self.get_bb())
 
     def hit_ball(self):
         pass
+
+    def get_bb(self):
+        return self.x - 50, self.y - 50, self.x + 50, self.y + 50
+
+    def handle_collision(self, group, other):
+        if group == 'pikachu:monster_ball':
+            print('pikachu:ball')
+            pass
