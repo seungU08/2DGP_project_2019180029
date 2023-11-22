@@ -43,9 +43,6 @@ def init():
     pikachu_world.add_collision_pair('pikachu:monster_ball', pikachu, None)
     pikachu_world.add_collision_pair('pikachu:monster_ball', None, monster_ball)
 
-    pikachu_world.add_collision_pair('monster_ball:beach', monster_ball, None)
-    pikachu_world.add_collision_pair('monster_ball:beach', None, beach)
-
 def finish():
     pikachu_world.clear()
 

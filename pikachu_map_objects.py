@@ -13,7 +13,10 @@ class Net:
 
     def draw(self):
         self.image.draw(565,220)
+        draw_rectangle(*self.get_bb())
 
+    def get_bb(self):
+        return 565 - 15, 220 - 140, 565 + 15, 220 + 140
 class Wave:
     def __init__(self):
         self.image = load_image('resource\\wave.png')

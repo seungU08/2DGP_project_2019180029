@@ -48,11 +48,11 @@ class Jump:
     @staticmethod
     def enter(pikachu, e):
         if right_down(e) or right_up(e):
-            pikachu.dir = 1
+            pikachu.speed = 1
         elif left_down(e) or left_up(e):
-            pikachu.dir = -1
+            pikachu.speed = -1
         elif up_up(e) or up_down(e):
-            pikachu.y_dir = 5
+            pikachu.speed_y = 5
         pikachu.action = 2
         pass
 
@@ -65,14 +65,14 @@ class Jump:
     @staticmethod
     def do(pikachu):
         pikachu.frame = (pikachu.frame + FRAMES_PER_ACTION * ACTION_PER_TIME * game_framework.frame_time) % 4
-        pikachu.x += pikachu.dir * RUN_SPEED_PPS * game_framework.frame_time
+        pikachu.x += pikachu.speed * RUN_SPEED_PPS * game_framework.frame_time
         pikachu.x = clamp(50, pikachu.x, 515)
 
-        if pikachu.y_dir != 0:
-            pikachu.y += pikachu.y_dir * RUN_SPEED_PPS * game_framework.frame_time
-            pikachu.y_dir = pikachu.y_dir - 0.03
+        if pikachu.speed_y != 0:
+            pikachu.y += pikachu.speed_y * RUN_SPEED_PPS * game_framework.frame_time
+            pikachu.speed_y = pikachu.speed_y - 0.03
         if pikachu.y < 150:
-            pikachu.y_dir = 0
+            pikachu.speed_y = 0
             pikachu.state_machine.handle_event(('y==150', 0))
 
         pass
@@ -87,9 +87,9 @@ class Run:
     @staticmethod
     def enter(pikachu, e):
         if right_down(e) or left_up(e):
-            pikachu.dir, pikachu.action = 1, 3
+            pikachu.speed, pikachu.action = 1, 3
         elif left_down(e) or right_up(e):
-            pikachu.dir, pikachu.action = -1, 3
+            pikachu.speed, pikachu.action = -1, 3
         pass
 
     @staticmethod
@@ -102,7 +102,7 @@ class Run:
     def do(pikachu):
 
         pikachu.frame = (pikachu.frame + FRAMES_PER_ACTION * ACTION_PER_TIME * game_framework.frame_time) % 8
-        pikachu.x += pikachu.dir * RUN_SPEED_PPS * game_framework.frame_time
+        pikachu.x += pikachu.speed * RUN_SPEED_PPS * game_framework.frame_time
         pikachu.x = clamp(25, pikachu.x, 515)
 
     @staticmethod
@@ -115,7 +115,7 @@ class Idle:
     @staticmethod
     def enter(pikachu, e):
         pikachu.action = 3
-        pikachu.dir = 0
+        pikachu.speed = 0
         pikachu.frame = 0
 
 
@@ -143,7 +143,7 @@ class StateMachine:
         self.pikachu = pikachu
         self.cur_state = Idle
         self.transitions = {
-            Idle: {right_down: Run, left_down: Run, left_up: Idle, right_up: Idle, up_down: Jump, l_down: Idle},
+            Idle: {right_down: Run, left_down: Run, left_up: Run, right_up: Run, up_down: Jump, l_down: Idle},
             Run: {right_down: Idle, left_down: Idle, right_up: Idle, left_up: Idle, up_down: Jump, l_down: Run},
             Jump: {right_down: Jump, left_down: Jump, left_up: Jump, right_up: Jump, y_150: Idle, l_down: Jump}
         }
@@ -170,11 +170,11 @@ class StateMachine:
 
 class Pikachu:
     def __init__(self):
-        self.x, self.y = 400, 150
+        self.x, self.y = 200, 150
         self.image = load_image('resource\\pikachu.png')
         self.frame = 0
-        self.y_dir = 0
-        self.dir = 0
+        self.speed_y = 0
+        self.speed = 0
         self.action = 0
         self.state_machine = StateMachine(self)
         self.state_machine.start()

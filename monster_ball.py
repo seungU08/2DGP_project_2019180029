@@ -1,8 +1,9 @@
 from pico2d import *
 import game_framework
+import play_mode
 
 PIXEL_PER_METER = (10.0 / 0.3)
-RUN_SPEED_KMPH = 20.0
+RUN_SPEED_KMPH = 25.0
 RUN_SPEED_MPM = (RUN_SPEED_KMPH * 1000.0 / 60.0)
 RUN_SPEED_MPS = (RUN_SPEED_MPM / 60.0)
 RUN_SPEED_PPS = (RUN_SPEED_MPS * PIXEL_PER_METER)
@@ -16,15 +17,24 @@ class Monster_ball:
         self.image = load_image('resource\\monster_ball.png')
         self.x, self.y = 200, 500
         self.frame = 0
-        self.dir_x, self.dir_y = 0, -1
+        self.speed_x, self.speed_y = 0, -1
 
     def update(self):
         self.frame = (self.frame + FRAMES_PER_ACTION * ACTION_PER_TIME * game_framework.frame_time) % 8
-        self.y += self.dir_y * RUN_SPEED_PPS * game_framework.frame_time
-        self.x += self.dir_x * RUN_SPEED_PPS * game_framework.frame_time
+        self.y += self.speed_y * RUN_SPEED_PPS * game_framework.frame_time
+        self.x += self.speed_x * RUN_SPEED_PPS * game_framework.frame_time
         self.x = clamp(25, self.x, 1150)
         self.y = clamp(150, self.y, 700)
-        self.dir_y = self.dir_y - 0.03
+        self.speed_y = self.speed_y - 0.03
+        if self.y >= 650:
+            self.speed_y = -self.speed_y
+        if self.y <= 100:
+            pass
+        if self.x <= 50:
+            self.speed_x = -self.speed_x
+        if self.x >= 1100:
+            self.speed_x = -self.speed_x
+
 
 
     def draw(self):
@@ -37,8 +47,6 @@ class Monster_ball:
 
     def handle_collision(self, group, a):
         if group == 'pikachu:monster_ball':
-            self.dir_x = self.dir_x - 2*self.dir_x
-            self.dir_y = self.dir_y - 2*self.dir_y
-        if group == 'monster_ball:beach':
-            self.dir_x, self.dir_y = 0, 0
+            self.speed_x += (self.x - play_mode.pikachu.x) / 50
+            self.speed_y += (self.y - (play_mode.pikachu.y-10)) / 50
         pass
