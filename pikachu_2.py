@@ -196,7 +196,9 @@ class Pikachu_2:
         pass
 
     def get_bb(self):
-        return self.x - 50, self.y - 50, self.x + 50, self.y + 50
+        return self.x - 50, self.y - 50, self.x + 40, self.y + 50
 
     def handle_collision(self, group, other):
+        if group == 'pikachu_2:monster_ball':
+            print('pikachu_2:ball')
         pass

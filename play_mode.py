@@ -48,6 +48,9 @@ def init():
     pikachu_world.add_collision_pair('pikachu:monster_ball', pikachu, None)
     pikachu_world.add_collision_pair('pikachu:monster_ball', None, monster_ball)
 
+    pikachu_world.add_collision_pair('pikachu_2:monster_ball', pikachu_2, None)
+    pikachu_world.add_collision_pair('pikachu_2:monster_ball', None, monster_ball)
+
     pikachu_world.add_collision_pair('monster_ball:net',monster_ball, None)
     pikachu_world.add_collision_pair('monster_ball:net', None, net)
 
