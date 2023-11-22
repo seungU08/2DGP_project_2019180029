@@ -23,7 +23,7 @@ def handle_events():
             pikachu_2.handle_event(event)
 
 def init():
-    global beach, net, wave, clouds, pikachu, pikachu_2, monster_ball, score_1, score_2
+    global beach, net, wave, clouds, pikachu, pikachu_2, monster_ball, score_1, score_2, start_ball
 
     score_1 = Score(50,650)
     pikachu_world.add_object(score_1, 2)
@@ -48,7 +48,9 @@ def init():
     pikachu_2 = Pikachu_2()
     pikachu_world.add_object(pikachu_2, 2)
 
-    monster_ball = Monster_ball()
+    start_ball = pikachu.x
+
+    monster_ball = Monster_ball(start_ball)
     pikachu_world.add_object(monster_ball, 2)
 
     pikachu_world.add_collision_pair('pikachu:monster_ball', pikachu, None)

@@ -67,4 +67,4 @@ class Score:
         pass
 
     def draw(self):
-        self.image.clip_draw(self.score * 30, 0, 30, 30, self.x, self.y, 50, 50)
+        self.image.clip_draw((self.score % 9) * 30, 0, 30, 30, self.x, self.y, 50, 50)

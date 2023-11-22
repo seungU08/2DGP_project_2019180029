@@ -13,9 +13,9 @@ ACTION_PER_TIME = 1.0 / TIME_PER_ACTION
 FRAMES_PER_ACTION = 7
 
 class Monster_ball:
-    def __init__(self):
+    def __init__(self, start_x):
         self.image = load_image('resource\\monster_ball.png')
-        self.x, self.y = 200, 500
+        self.x, self.y = start_x, 500
         self.frame = 0
         self.speed_x, self.speed_y = 0, -1
 
@@ -29,6 +29,7 @@ class Monster_ball:
         if self.y >= 650:
             self.speed_y = -self.speed_y
         if self.y <= 100:
+            play_mode.score_1.score +=1
             pass
         if self.x <= 50:
             self.speed_x = -self.speed_x
