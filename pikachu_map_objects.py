@@ -17,6 +17,11 @@ class Net:
 
     def get_bb(self):
         return 565 - 15, 220 - 140, 565 + 15, 220 + 140
+
+    def handle_collision(self, group, a):
+        pass
+
+
 class Wave:
     def __init__(self):
         self.image = load_image('resource\\wave.png')
