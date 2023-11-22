@@ -66,7 +66,7 @@ class Jump:
     def do(pikachu_2):
         pikachu_2.frame = (pikachu_2.frame + FRAMES_PER_ACTION * ACTION_PER_TIME * game_framework.frame_time) % 4
         pikachu_2.x += pikachu_2.speed * RUN_SPEED_PPS * game_framework.frame_time
-        pikachu_2.x = clamp(50, pikachu_2.x, 515)
+        pikachu_2.x = clamp(615, pikachu_2.x, 1100)
 
         if pikachu_2.speed_y != 0:
             pikachu_2.y += pikachu_2.speed_y * RUN_SPEED_PPS * game_framework.frame_time
@@ -79,7 +79,7 @@ class Jump:
 
     @staticmethod
     def draw(pikachu_2):
-        pikachu_2.image.clip_composite_draw(int(pikachu_2.frame) * 100,int(pikachu_2.action) * 100, 100, 100, 3.141592 / 2, '', pikachu_2.x - 25, pikachu_2.y - 25, 100, 100)
+        pikachu_2.image.clip_composite_draw(int(pikachu_2.frame) * 100,int(pikachu_2.action) * 100, 100, 100, 0, 'h', pikachu_2.x, pikachu_2.y, 100, 100)
 
 
 
@@ -103,11 +103,11 @@ class Run:
 
         pikachu_2.frame = (pikachu_2.frame + FRAMES_PER_ACTION * ACTION_PER_TIME * game_framework.frame_time) % 8
         pikachu_2.x += pikachu_2.speed * RUN_SPEED_PPS * game_framework.frame_time
-        pikachu_2.x = clamp(25, pikachu_2.x, 515)
+        pikachu_2.x = clamp(615, pikachu_2.x, 1100)
 
     @staticmethod
     def draw(pikachu_2):
-        pikachu_2.image.clip_composite_draw(int(pikachu_2.frame) * 100,int(pikachu_2.action) * 100, 100, 100, 3.141592 / 2, '', pikachu_2.x - 25, pikachu_2.y - 25, 100, 100)
+        pikachu_2.image.clip_composite_draw(int(pikachu_2.frame) * 100,int(pikachu_2.action) * 100, 100, 100, 0, 'h', pikachu_2.x, pikachu_2.y, 100, 100)
 
 
 
@@ -135,7 +135,7 @@ class Idle:
 
     @staticmethod
     def draw(pikachu_2):
-        pikachu_2.image.clip_composite_draw(int(pikachu_2.frame) * 100,int(pikachu_2.action) * 100, 100, 100, 3.141592 / 2, '', pikachu_2.x - 25, pikachu_2.y - 25, 100, 100)
+        pikachu_2.image.clip_composite_draw(int(pikachu_2.frame) * 100,int(pikachu_2.action) * 100, 100, 100, 0, 'h', pikachu_2.x, pikachu_2.y, 100, 100)
 
 
 class StateMachine:

@@ -6,6 +6,7 @@ import random
 from beach import Beach
 from monster_ball import Monster_ball
 from pikachu import Pikachu
+from pikachu_2 import Pikachu_2
 from pikachu_map_objects import *
 
 
@@ -19,9 +20,10 @@ def handle_events():
             game_framework.quit()
         else:
             pikachu.handle_event(event)
+            pikachu_2.handle_event(event)
 
 def init():
-    global beach, net, wave, clouds, pikachu
+    global beach, net, wave, clouds, pikachu, pikachu_2, monster_ball
     beach = Beach()
     pikachu_world.add_object(beach, 0)
 
@@ -35,7 +37,10 @@ def init():
     #pikachu_world.add_objects(clouds, 1)
 
     pikachu = Pikachu()
-    pikachu_world.add_object(pikachu,2)
+    pikachu_world.add_object(pikachu, 2)
+
+    pikachu_2 = Pikachu_2()
+    pikachu_world.add_object(pikachu_2, 2)
 
     monster_ball = Monster_ball()
     pikachu_world.add_object(monster_ball, 2)
