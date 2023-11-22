@@ -4,33 +4,33 @@ import pikachu_world
 
 
 def right_down(e):
-    return e[0] == 'INPUT' and e[1].type == SDL_KEYDOWN and e[1].key == SDLK_RIGHT
+    return e[0] == 'INPUT' and e[1].type == SDL_KEYDOWN and e[1].key == SDLK_d
 
 
 def right_up(e):
-    return e[0] == 'INPUT' and e[1].type == SDL_KEYUP and e[1].key == SDLK_RIGHT
+    return e[0] == 'INPUT' and e[1].type == SDL_KEYUP and e[1].key == SDLK_d
 
 
 def left_down(e):
-    return e[0] == 'INPUT' and e[1].type == SDL_KEYDOWN and e[1].key == SDLK_LEFT
+    return e[0] == 'INPUT' and e[1].type == SDL_KEYDOWN and e[1].key == SDLK_a
 
 
 def left_up(e):
-    return e[0] == 'INPUT' and e[1].type == SDL_KEYUP and e[1].key == SDLK_LEFT
+    return e[0] == 'INPUT' and e[1].type == SDL_KEYUP and e[1].key == SDLK_a
 
 
 def up_down(e):
-    return e[0] == 'INPUT' and e[1].type == SDL_KEYDOWN and e[1].key == SDLK_UP
+    return e[0] == 'INPUT' and e[1].type == SDL_KEYDOWN and e[1].key == SDLK_w
 
 
 def up_up(e):
-    return e[0] == 'INPUT' and e[1].type == SDL_KEYUP and e[1].key == SDLK_UP
+    return e[0] == 'INPUT' and e[1].type == SDL_KEYUP and e[1].key == SDLK_w
 
 def y_150(e):
     return e[0] == 'y==150'
 
 def l_down(e):
-    return e[0] == 'INPUT' and e[1].type == SDL_KEYDOWN and e[1].key == SDLK_l
+    return e[0] == 'INPUT' and e[1].type == SDL_KEYDOWN and e[1].key == SDLK_g
 
 
 PIXEL_PER_METER = (10.0 / 0.3)
@@ -66,7 +66,7 @@ class Jump:
     def do(pikachu_2):
         pikachu_2.frame = (pikachu_2.frame + FRAMES_PER_ACTION * ACTION_PER_TIME * game_framework.frame_time) % 4
         pikachu_2.x += pikachu_2.speed * RUN_SPEED_PPS * game_framework.frame_time
-        pikachu_2.x = clamp(615, pikachu_2.x, 1100)
+        pikachu_2.x = clamp(615, pikachu_2.x, 1080)
 
         if pikachu_2.speed_y != 0:
             pikachu_2.y += pikachu_2.speed_y * RUN_SPEED_PPS * game_framework.frame_time
@@ -103,7 +103,7 @@ class Run:
 
         pikachu_2.frame = (pikachu_2.frame + FRAMES_PER_ACTION * ACTION_PER_TIME * game_framework.frame_time) % 8
         pikachu_2.x += pikachu_2.speed * RUN_SPEED_PPS * game_framework.frame_time
-        pikachu_2.x = clamp(615, pikachu_2.x, 1100)
+        pikachu_2.x = clamp(615, pikachu_2.x, 1080)
 
     @staticmethod
     def draw(pikachu_2):
