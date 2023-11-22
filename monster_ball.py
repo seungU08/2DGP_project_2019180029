@@ -20,10 +20,10 @@ class Monster_ball:
         self.speed_x, self.speed_y = 0, -1
 
     def update(self):
-        self.frame = (self.frame + FRAMES_PER_ACTION * ACTION_PER_TIME * game_framework.frame_time) % 8
+        self.frame = (self.frame + FRAMES_PER_ACTION * ACTION_PER_TIME * game_framework.frame_time) % 5
         self.y += self.speed_y * RUN_SPEED_PPS * game_framework.frame_time
         self.x += self.speed_x * RUN_SPEED_PPS * game_framework.frame_time
-        self.x = clamp(25, self.x, 1150)
+        self.x = clamp(25, self.x, 1130)
         self.y = clamp(150, self.y, 700)
         self.speed_y = self.speed_y - 0.03
         if self.y >= 650:
