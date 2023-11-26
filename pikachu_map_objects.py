@@ -12,11 +12,11 @@ class Net:
         pass
 
     def draw(self):
-        self.image.draw(565,220)
+        self.image.draw(500, 220)
         draw_rectangle(*self.get_bb())
 
     def get_bb(self):
-        return 565 - 15, 220 - 140, 565 + 15, 220 + 140
+        return 500 - 15, 220 - 140, 500 + 15, 220 + 140
 
     def handle_collision(self, group, a):
         pass
@@ -36,7 +36,7 @@ class Wave:
         self.y = self.y + self.dir
 
     def draw(self):
-        self.image.draw(565, self.y)
+        self.image.draw(500, self.y)
 
 class Cloud:
     def __init__(self,x,y):
@@ -47,7 +47,7 @@ class Cloud:
 
     def update(self):
         self.x = self.x + self.speed/5
-        if self.x >= 1130:
+        if self.x >= 1000:
             self.x = -100
             self.y = random.randint(400,700)
             self.speed = random.randint(1, 5)
@@ -68,3 +68,5 @@ class Score:
 
     def draw(self):
         self.image.clip_draw((self.score % 9) * 30, 0, 30, 30, self.x, self.y, 50, 50)
+
+

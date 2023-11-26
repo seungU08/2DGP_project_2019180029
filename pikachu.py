@@ -33,16 +33,15 @@ def l_down(e):
     return e[0] == 'INPUT' and e[1].type == SDL_KEYDOWN and e[1].key == SDLK_l
 
 
-PIXEL_PER_METER = (10.0 / 0.3)
-RUN_SPEED_KMPH = 20.0
+PIXEL_PER_METER = (1000/18)
+RUN_SPEED_KMPH = 12.0
 RUN_SPEED_MPM = (RUN_SPEED_KMPH * 1000.0 / 60.0)
 RUN_SPEED_MPS = (RUN_SPEED_MPM / 60.0)
 RUN_SPEED_PPS = (RUN_SPEED_MPS * PIXEL_PER_METER)
 
 TIME_PER_ACTION = 0.5
 ACTION_PER_TIME = 1.0 / TIME_PER_ACTION
-FRAMES_PER_ACTION = 7
-
+FRAMES_PER_ACTION = 5
 
 class Jump:
     @staticmethod
@@ -54,6 +53,7 @@ class Jump:
         elif up_up(e) or up_down(e):
             pikachu.speed_y = 5
         pikachu.action = 2
+
         pass
 
     @staticmethod
@@ -64,9 +64,9 @@ class Jump:
 
     @staticmethod
     def do(pikachu):
-        pikachu.frame = (pikachu.frame + FRAMES_PER_ACTION * ACTION_PER_TIME * game_framework.frame_time) % 4
+        pikachu.frame = (pikachu.frame + FRAMES_PER_ACTION * (ACTION_PER_TIME*2) * game_framework.frame_time) % 4
         pikachu.x += pikachu.speed_x * RUN_SPEED_PPS * game_framework.frame_time
-        pikachu.x = clamp(50, pikachu.x, 515)
+        pikachu.x = clamp(50, pikachu.x, 500 - 50)
 
         if pikachu.speed_y != 0:
             pikachu.y += pikachu.speed_y * RUN_SPEED_PPS * game_framework.frame_time
@@ -100,10 +100,9 @@ class Run:
 
     @staticmethod
     def do(pikachu):
-
         pikachu.frame = (pikachu.frame + FRAMES_PER_ACTION * ACTION_PER_TIME * game_framework.frame_time) % 8
         pikachu.x += pikachu.speed_x * RUN_SPEED_PPS * game_framework.frame_time
-        pikachu.x = clamp(25, pikachu.x, 515)
+        pikachu.x = clamp(50, pikachu.x, 500 - 50)
 
     @staticmethod
     def draw(pikachu):
