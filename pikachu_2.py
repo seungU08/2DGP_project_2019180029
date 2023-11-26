@@ -66,7 +66,7 @@ class Jump:
     def do(pikachu_2):
         pikachu_2.frame = (pikachu_2.frame + FRAMES_PER_ACTION*2 * ACTION_PER_TIME * game_framework.frame_time) % 4
         pikachu_2.x += pikachu_2.speed_x * RUN_SPEED_PPS * game_framework.frame_time
-        pikachu_2.x = clamp(500+50, pikachu_2.x, 1000 - 50)
+        pikachu_2.x = clamp(500+25, pikachu_2.x, 1000 - 25)
 
         if pikachu_2.speed_y != 0:
             pikachu_2.y += pikachu_2.speed_y * RUN_SPEED_PPS * game_framework.frame_time
@@ -103,7 +103,7 @@ class Run:
 
         pikachu_2.frame = (pikachu_2.frame + FRAMES_PER_ACTION * ACTION_PER_TIME * game_framework.frame_time) % 8
         pikachu_2.x += pikachu_2.speed_x * RUN_SPEED_PPS * game_framework.frame_time
-        pikachu_2.x = clamp(550, pikachu_2.x, 950)
+        pikachu_2.x = clamp(525, pikachu_2.x, 975)
 
     @staticmethod
     def draw(pikachu_2):
