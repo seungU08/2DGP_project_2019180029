@@ -18,7 +18,7 @@ def handle_events():
 
 def init():
     global image
-    image = load_image("#title")    #타이틀 이미지 만들어야함
+    image = load_image('resource\\title.png')
     pass
 
 def finish():
@@ -29,7 +29,7 @@ def update():
 
 def draw():
     clear_canvas()
-    image.draw(565, 350)
+    image.draw(500, 350)
     update_canvas()
 
 def pause():
