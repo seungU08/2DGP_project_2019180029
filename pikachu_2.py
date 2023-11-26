@@ -48,9 +48,9 @@ class Jump:
     @staticmethod
     def enter(pikachu_2, e):
         if right_down(e) or right_up(e):
-            pikachu_2.speed = 1
+            pikachu_2.speed_x = 1
         elif left_down(e) or left_up(e):
-            pikachu_2.speed = -1
+            pikachu_2.speed_x = -1
         elif up_up(e) or up_down(e):
             pikachu_2.speed_y = 5
         pikachu_2.action = 2
@@ -65,7 +65,7 @@ class Jump:
     @staticmethod
     def do(pikachu_2):
         pikachu_2.frame = (pikachu_2.frame + FRAMES_PER_ACTION * ACTION_PER_TIME * game_framework.frame_time) % 4
-        pikachu_2.x += pikachu_2.speed * RUN_SPEED_PPS * game_framework.frame_time
+        pikachu_2.x += pikachu_2.speed_x * RUN_SPEED_PPS * game_framework.frame_time
         pikachu_2.x = clamp(615, pikachu_2.x, 1080)
 
         if pikachu_2.speed_y != 0:
@@ -87,9 +87,9 @@ class Run:
     @staticmethod
     def enter(pikachu_2, e):
         if right_down(e) or left_up(e):
-            pikachu_2.speed, pikachu_2.action = 1, 3
+            pikachu_2.speed_x, pikachu_2.action = 1, 3
         elif left_down(e) or right_up(e):
-            pikachu_2.speed, pikachu_2.action = -1, 3
+            pikachu_2.speed_x, pikachu_2.action = -1, 3
         pass
 
     @staticmethod
@@ -102,7 +102,7 @@ class Run:
     def do(pikachu_2):
 
         pikachu_2.frame = (pikachu_2.frame + FRAMES_PER_ACTION * ACTION_PER_TIME * game_framework.frame_time) % 8
-        pikachu_2.x += pikachu_2.speed * RUN_SPEED_PPS * game_framework.frame_time
+        pikachu_2.x += pikachu_2.speed_x * RUN_SPEED_PPS * game_framework.frame_time
         pikachu_2.x = clamp(615, pikachu_2.x, 1080)
 
     @staticmethod
@@ -116,7 +116,7 @@ class Idle:
     @staticmethod
     def enter(pikachu_2, e):
         pikachu_2.action = 3
-        pikachu_2.speed = 0
+        pikachu_2.speed_x = 0
         pikachu_2.frame = 0
 
 

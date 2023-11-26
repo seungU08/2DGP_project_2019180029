@@ -48,9 +48,9 @@ class Jump:
     @staticmethod
     def enter(pikachu, e):
         if right_down(e) or right_up(e):
-            pikachu.speed = 1
+            pikachu.speed_x = 1
         elif left_down(e) or left_up(e):
-            pikachu.speed = -1
+            pikachu.speed_x = -1
         elif up_up(e) or up_down(e):
             pikachu.speed_y = 5
         pikachu.action = 2
@@ -65,7 +65,7 @@ class Jump:
     @staticmethod
     def do(pikachu):
         pikachu.frame = (pikachu.frame + FRAMES_PER_ACTION * ACTION_PER_TIME * game_framework.frame_time) % 4
-        pikachu.x += pikachu.speed * RUN_SPEED_PPS * game_framework.frame_time
+        pikachu.x += pikachu.speed_x * RUN_SPEED_PPS * game_framework.frame_time
         pikachu.x = clamp(50, pikachu.x, 515)
 
         if pikachu.speed_y != 0:
@@ -87,9 +87,9 @@ class Run:
     @staticmethod
     def enter(pikachu, e):
         if right_down(e) or left_up(e):
-            pikachu.speed, pikachu.action = 1, 3
+            pikachu.speed_x, pikachu.action = 1, 3
         elif left_down(e) or right_up(e):
-            pikachu.speed, pikachu.action = -1, 3
+            pikachu.speed_x, pikachu.action = -1, 3
         pass
 
     @staticmethod
@@ -102,7 +102,7 @@ class Run:
     def do(pikachu):
 
         pikachu.frame = (pikachu.frame + FRAMES_PER_ACTION * ACTION_PER_TIME * game_framework.frame_time) % 8
-        pikachu.x += pikachu.speed * RUN_SPEED_PPS * game_framework.frame_time
+        pikachu.x += pikachu.speed_x * RUN_SPEED_PPS * game_framework.frame_time
         pikachu.x = clamp(25, pikachu.x, 515)
 
     @staticmethod
@@ -115,7 +115,7 @@ class Idle:
     @staticmethod
     def enter(pikachu, e):
         pikachu.action = 3
-        pikachu.speed = 0
+        pikachu.speed_x = 0
         pikachu.frame = 0
 
 
@@ -174,7 +174,7 @@ class Pikachu:
         self.image = load_image('resource\\pikachu.png')
         self.frame = 0
         self.speed_y = 0
-        self.speed = 0
+        self.speed_x = 0
         self.action = 0
         self.state_machine = StateMachine(self)
         self.state_machine.start()
