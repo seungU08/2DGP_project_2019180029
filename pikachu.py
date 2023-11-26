@@ -102,7 +102,7 @@ class Run:
     def do(pikachu):
         pikachu.frame = (pikachu.frame + FRAMES_PER_ACTION * ACTION_PER_TIME * game_framework.frame_time) % 8
         pikachu.x += pikachu.speed_x * RUN_SPEED_PPS * game_framework.frame_time
-        pikachu.x = clamp(50, pikachu.x, 500 - 50)
+        pikachu.x = clamp(25, pikachu.x, 500 - 25)
 
     @staticmethod
     def draw(pikachu):
