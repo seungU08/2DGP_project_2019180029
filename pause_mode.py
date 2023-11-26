@@ -24,7 +24,6 @@ def finish():
     pass
 
 def update():
-    pikachu_world.update()
     pass
 
 def draw():
