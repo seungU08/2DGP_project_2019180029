@@ -8,7 +8,7 @@ class Beach:
         pass
 
     def draw(self):
-        self.image.draw(565,350)
+        self.image.draw(500,350)
 
     def get_bb(self):
         pass
