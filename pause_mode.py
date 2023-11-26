@@ -14,11 +14,10 @@ def handle_events():
         elif event.type == SDL_KEYDOWN and event.key == SDLK_ESCAPE:
             game_framework.quit()
         elif event.type == SDL_KEYDOWN and event.key == SDLK_SPACE:
-            game_framework.pop_mode(play_mode)
+            game_framework.pop_mode()
 
 
 def init():
-
     pass
 
 def finish():
@@ -30,7 +29,7 @@ def update():
 
 def draw():
     clear_canvas()
-
+    pikachu_world.render()
     update_canvas()
 
 def pause():

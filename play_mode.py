@@ -3,6 +3,7 @@ from pico2d import *
 import game_framework
 import pikachu_world
 import pause_mode
+
 import random
 from beach import Beach
 from monster_ball import Monster_ball
@@ -20,7 +21,7 @@ def handle_events():
         elif event.type == SDL_KEYDOWN and event.key == SDLK_ESCAPE:
             game_framework.quit()
         elif event.type == SDL_KEYDOWN and event.key == SDLK_SPACE:
-            game_framework.pop_mode(pause_mode)
+            game_framework.push_mode(pause_mode)
         else:
             pikachu.handle_event(event)
             pikachu_2.handle_event(event)
