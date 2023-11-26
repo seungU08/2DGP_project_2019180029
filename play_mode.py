@@ -28,12 +28,13 @@ def handle_events():
             pikachu.handle_event(event)
             pikachu_2.handle_event(event)
 
+
 def init():
     global beach, net, wave, clouds, pikachu, pikachu_2, monster_ball, score_1, score_2, start_ball
 
     score_1 = Score(50,650)
     pikachu_world.add_object(score_1, 2)
-    score_2 = Score(1080, 650)
+    score_2 = Score(950, 650)
     pikachu_world.add_object(score_2, 2)
 
     beach = Beach()
@@ -74,6 +75,8 @@ def finish():
 def update():
     pikachu_world.update()
     pikachu_world.handle_collisions()
+    #if monster_ball.y <= 150:
+    #    game_framework.change_mode(play_mode)
 
 def draw():
     clear_canvas()
