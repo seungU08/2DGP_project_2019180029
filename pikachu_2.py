@@ -29,7 +29,7 @@ def up_up(e):
 def y_150(e):
     return e[0] == 'y==150'
 
-def l_down(e):
+def g_down(e):
     return e[0] == 'INPUT' and e[1].type == SDL_KEYDOWN and e[1].key == SDLK_g
 
 
@@ -58,7 +58,7 @@ class Jump:
 
     @staticmethod
     def exit(pikachu_2, e):
-        if l_down(e):
+        if g_down(e):
             pikachu_2.hit_ball()
         pass
 
@@ -94,7 +94,7 @@ class Run:
 
     @staticmethod
     def exit(pikachu_2, e):
-        if l_down(e):
+        if g_down(e):
             pikachu_2.hit_ball()
         pass
 
@@ -123,7 +123,7 @@ class Idle:
 
     @staticmethod
     def exit(pikachu_2, e):
-        if l_down(e):
+        if g_down(e):
             pikachu_2.hit_ball()
         pass
 
@@ -143,9 +143,9 @@ class StateMachine:
         self.pikachu_2 = pikachu_2
         self.cur_state = Idle
         self.transitions = {
-            Idle: {right_down: Run, left_down: Run, left_up: Run, right_up: Run, up_down: Jump, l_down: Idle},
-            Run: {right_down: Idle, left_down: Idle, right_up: Idle, left_up: Idle, up_down: Jump, l_down: Run},
-            Jump: {right_down: Jump, left_down: Jump, left_up: Jump, right_up: Jump, y_150: Idle, l_down: Jump}
+            Idle: {right_down: Run, left_down: Run, left_up: Run, right_up: Run, up_down: Jump, g_down: Idle},
+            Run: {right_down: Idle, left_down: Idle, right_up: Idle, left_up: Idle, up_down: Jump, g_down: Run},
+            Jump: {right_down: Jump, left_down: Jump, left_up: Jump, right_up: Jump, y_150: Idle, g_down: Jump}
         }
 
     def start(self):
