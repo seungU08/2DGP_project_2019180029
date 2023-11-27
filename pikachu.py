@@ -1,36 +1,37 @@
 from pico2d import *
 import game_framework
 import pikachu_world
+import play_mode
 
 
 def right_down(e):
-    return e[0] == 'INPUT' and e[1].type == SDL_KEYDOWN and e[1].key == SDLK_RIGHT
+    return e[0] == 'INPUT' and e[1].type == SDL_KEYDOWN and e[1].key == SDLK_d
 
 
 def right_up(e):
-    return e[0] == 'INPUT' and e[1].type == SDL_KEYUP and e[1].key == SDLK_RIGHT
+    return e[0] == 'INPUT' and e[1].type == SDL_KEYUP and e[1].key == SDLK_d
 
 
 def left_down(e):
-    return e[0] == 'INPUT' and e[1].type == SDL_KEYDOWN and e[1].key == SDLK_LEFT
+    return e[0] == 'INPUT' and e[1].type == SDL_KEYDOWN and e[1].key == SDLK_a
 
 
 def left_up(e):
-    return e[0] == 'INPUT' and e[1].type == SDL_KEYUP and e[1].key == SDLK_LEFT
+    return e[0] == 'INPUT' and e[1].type == SDL_KEYUP and e[1].key == SDLK_a
 
 
 def up_down(e):
-    return e[0] == 'INPUT' and e[1].type == SDL_KEYDOWN and e[1].key == SDLK_UP
+    return e[0] == 'INPUT' and e[1].type == SDL_KEYDOWN and e[1].key == SDLK_w
 
 
 def up_up(e):
-    return e[0] == 'INPUT' and e[1].type == SDL_KEYUP and e[1].key == SDLK_UP
+    return e[0] == 'INPUT' and e[1].type == SDL_KEYUP and e[1].key == SDLK_w
 
 def y_150(e):
     return e[0] == 'y==150'
 
-def l_down(e):
-    return e[0] == 'INPUT' and e[1].type == SDL_KEYDOWN and e[1].key == SDLK_l
+def g_down(e):
+    return e[0] == 'INPUT' and e[1].type == SDL_KEYDOWN and e[1].key == SDLK_g
 
 
 PIXEL_PER_METER = (1000/18)
@@ -58,7 +59,7 @@ class Jump:
 
     @staticmethod
     def exit(pikachu, e):
-        if l_down(e):
+        if g_down(e):
             pikachu.hit_ball()
         pass
 
@@ -94,7 +95,7 @@ class Run:
 
     @staticmethod
     def exit(pikachu, e):
-        if l_down(e):
+        if g_down(e):
             pikachu.hit_ball()
         pass
 
@@ -121,7 +122,7 @@ class Idle:
 
     @staticmethod
     def exit(pikachu, e):
-        if l_down(e):
+        if g_down(e):
             pikachu.hit_ball()
         pass
 
@@ -142,9 +143,9 @@ class StateMachine:
         self.pikachu = pikachu
         self.cur_state = Idle
         self.transitions = {
-            Idle: {right_down: Run, left_down: Run, left_up: Run, right_up: Run, up_down: Jump, l_down: Idle},
-            Run: {right_down: Idle, left_down: Idle, right_up: Idle, left_up: Idle, up_down: Jump, l_down: Run},
-            Jump: {right_down: Jump, left_down: Jump, left_up: Jump, right_up: Jump, y_150: Idle, l_down: Jump}
+            Idle: {right_down: Run, left_down: Run, left_up: Run, right_up: Run, up_down: Jump, g_down: Idle},
+            Run: {right_down: Idle, left_down: Idle, right_up: Idle, left_up: Idle, up_down: Jump, g_down: Run},
+            Jump: {right_down: Jump, left_down: Jump, left_up: Jump, right_up: Jump, y_150: Idle, g_down: Jump}
         }
 
     def start(self):
@@ -192,6 +193,8 @@ class Pikachu:
         draw_rectangle(*self.get_bb())
 
     def hit_ball(self):
+        if self.x - play_mode.monster_ball.x < 10:
+            pass
         pass
 
     def get_bb(self):
