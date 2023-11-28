@@ -19,7 +19,7 @@ def handle_events():
 def init():
     global logo_start_time, a
     global image, game_start_image, ready_image
-    image = load_image('resource\\start_map.png')
+    image = load_image('resource\\game_start_map.png')
     logo_start_time = get_time()
     game_start_image = load_image('resource\\start.png')
     ready_image = load_image('resource\\ready.png')

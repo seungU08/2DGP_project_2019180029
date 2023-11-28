@@ -38,6 +38,7 @@ class Monster_ball:
         #draw_rectangle(*self.get_bb())
 
 
+
     def get_bb(self):
         return self.x - 50, self.y - 50, self.x + 50, self.y + 50
 
