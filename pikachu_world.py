@@ -18,16 +18,26 @@ def render():
         for o in layer:
             o.draw()
 
+def remove_collision_object(o):
+    for pairs in collision_pairs.values():
+        if o in pairs[0]:
+            pairs[0].remove(o)
+        if o in pairs[1]:
+            pairs[1].remove(o)
+
 def remove_object(o):
     for layer in objects:
         if o in layer:
             layer.remove(o)
+            remove_collision_object(o)
+            del o
             return
     raise ValueError('?')
 
 def clear():
     for layer in objects:
         layer.clear()
+
 
 def collide(a,b):
     la, ba, ra, ta = a.get_bb()

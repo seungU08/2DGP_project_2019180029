@@ -190,7 +190,7 @@ class Pikachu:
 
     def draw(self):
         self.state_machine.draw()
-        draw_rectangle(*self.get_bb())
+        #draw_rectangle(*self.get_bb())
 
     def hit_ball(self):
         if self.x - play_mode.monster_ball.x < 10:
@@ -198,7 +198,7 @@ class Pikachu:
         pass
 
     def get_bb(self):
-        return self.x - 40, self.y - 50, self.x + 50, self.y + 50
+        return self.x - 40, self.y - 50, self.x + 50, self.y + 40
 
     def handle_collision(self, group, other):
         if group == 'pikachu:monster_ball':

@@ -16,7 +16,7 @@ class Net:
         draw_rectangle(*self.get_bb())
 
     def get_bb(self):
-        return 500 - 15, 220 - 140, 500 + 15, 220 + 140
+        return 500 - 3, 220 - 140, 500 + 3, 220 + 140
 
     def handle_collision(self, group, a):
         pass
