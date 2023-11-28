@@ -17,17 +17,20 @@ def handle_events():
 
 
 def init():
-    global logo_start_time
+    global logo_start_time, a
     global image, game_start_image
     image = load_image('resource\\start_map.png')
     logo_start_time = get_time()
     game_start_image = load_image('resource\\start.png')
+    a = 1.0
     pass
 
 def finish():
     pass
 
 def update():
+    global a
+    a += 0.005
     if get_time() - logo_start_time >= 2.0:
         game_framework.change_mode(play_mode)
     pass
@@ -35,7 +38,7 @@ def update():
 def draw():
     clear_canvas()
     image.draw(500, 350)
-    game_start_image.clip_draw(0,0,100,50, 500,500, 100,50)
+    game_start_image.clip_draw(0,0,100,50, 500,500, 100*a,50*a)
     update_canvas()
 
 def pause():

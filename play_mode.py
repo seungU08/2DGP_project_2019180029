@@ -33,10 +33,10 @@ def handle_events():
 def init():
     global beach, net, wave, clouds, pikachu, pikachu_2, monster_ball, score_1, score_2, start_ball
 
-    #server.score_1 = Score(50,650)
-    #pikachu_world.add_object(server.score_1, 2)
-    #server.score_2 = Score(950, 650)
-    #pikachu_world.add_object(server.score_2, 2)
+    server.score_1 = Score(50,650)
+    pikachu_world.add_object(server.score_1, 2)
+    server.score_2 = Score(950, 650)
+    pikachu_world.add_object(server.score_2, 2)
 
     beach = Beach()
     pikachu_world.add_object(beach, 0)
@@ -44,11 +44,11 @@ def init():
     net = Net()
     pikachu_world.add_object(net, 2)
 
-    #wave = Wave()
-    #pikachu_world.add_object(wave, 1)
+    wave = Wave()
+    pikachu_world.add_object(wave, 1)
 
-    #clouds = [Cloud(random.randint(0,1130), random.randint(400,700)) for _ in range(10)]
-    #pikachu_world.add_objects(clouds, 1)
+    clouds = [Cloud(random.randint(0,1130), random.randint(400,700)) for _ in range(10)]
+    pikachu_world.add_objects(clouds, 1)
 
     pikachu = Pikachu()
     pikachu_world.add_object(pikachu, 2)
