@@ -61,12 +61,12 @@ class Score:
         self.image = load_image('resource\\score.png')
         self.x = x
         self.y = y
-        self.score = 0
+        self.count = 0
 
     def update(self):
         pass
 
     def draw(self):
-        self.image.clip_draw((self.score % 9) * 30, 0, 30, 30, self.x, self.y, 50, 50)
+        self.image.clip_draw((self.count % 9) * 30, 0, 30, 30, self.x, self.y, 50, 50)
 
 

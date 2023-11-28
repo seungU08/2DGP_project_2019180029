@@ -1,6 +1,7 @@
 from pico2d import *
 
 import game_framework
+import game_start
 import pikachu_world
 import pause_mode
 import play_mode
@@ -31,11 +32,13 @@ def handle_events():
 
 
 def init():
-    global beach, net, wave, clouds, pikachu, pikachu_2, monster_ball, score_1, score_2, start_ball
+    global beach, net, wave, clouds, pikachu, pikachu_2, monster_ball
 
-    server.score_1 = Score(50,650)
+    if server.score_1 == None:
+        server.score_1 = Score(100, 600)
     pikachu_world.add_object(server.score_1, 2)
-    server.score_2 = Score(950, 650)
+    if server.score_2 == None:
+        server.score_2 = Score(900,600)
     pikachu_world.add_object(server.score_2, 2)
 
     beach = Beach()
@@ -44,11 +47,11 @@ def init():
     net = Net()
     pikachu_world.add_object(net, 2)
 
-    wave = Wave()
-    pikachu_world.add_object(wave, 1)
+    #wave = Wave()
+    #pikachu_world.add_object(wave, 1)
 
-    clouds = [Cloud(random.randint(0,1130), random.randint(400,700)) for _ in range(10)]
-    pikachu_world.add_objects(clouds, 1)
+    #clouds = [Cloud(random.randint(0,1130), random.randint(400,700)) for _ in range(10)]
+    #pikachu_world.add_objects(clouds, 1)
 
     pikachu = Pikachu()
     pikachu_world.add_object(pikachu, 2)
@@ -56,7 +59,11 @@ def init():
     pikachu_2 = Pikachu_2()
     pikachu_world.add_object(pikachu_2, 2)
 
-    start_ball = pikachu.x
+    start_ball = 0.0
+    if server.winner == '1p' or server.winner == None:
+        start_ball = pikachu.x
+    elif server.winner == '2p':
+        start_ball = pikachu_2.x
 
     monster_ball = Monster_ball(start_ball)
     pikachu_world.add_object(monster_ball, 2)
@@ -74,6 +81,17 @@ def finish():
     pikachu_world.clear()
 
 def update():
+    global start_ball, monster_ball
+    if monster_ball.y <= 150:
+        if monster_ball.x <=500:
+            server.score_2.count +=1
+            server.winner = '2p'
+            print('2p win')
+        else:
+            server.score_1.count +=1
+            server.winner = '1p'
+            print('1p win')
+        game_framework.change_mode(game_start)
     pikachu_world.update()
     pikachu_world.handle_collisions()
 

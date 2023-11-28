@@ -35,8 +35,10 @@ def remove_object(o):
     raise ValueError('?')
 
 def clear():
-    for layer in objects:
-        layer.clear()
+    global objects, collision_pairs
+
+    objects = [[] for _ in range(3)]
+    collision_pairs = {}
 
 
 def collide(a,b):
