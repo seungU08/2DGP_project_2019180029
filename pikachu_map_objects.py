@@ -13,7 +13,7 @@ class Net:
 
     def draw(self):
         self.image.draw(500, 220)
-        draw_rectangle(*self.get_bb())
+        #draw_rectangle(*self.get_bb())
 
     def get_bb(self):
         return 500 - 3, 220 - 140, 500 + 3, 220 + 140
