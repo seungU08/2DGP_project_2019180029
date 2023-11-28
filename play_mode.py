@@ -5,6 +5,8 @@ import pikachu_world
 import pause_mode
 import play_mode
 import random
+
+import server
 from beach import Beach
 from monster_ball import Monster_ball
 from pikachu import Pikachu
@@ -13,7 +15,6 @@ from pikachu_map_objects import *
 
 
 def handle_events():
-
     events = get_events()
     for event in events:
         if event.type == SDL_QUIT:
@@ -32,10 +33,10 @@ def handle_events():
 def init():
     global beach, net, wave, clouds, pikachu, pikachu_2, monster_ball, score_1, score_2, start_ball
 
-    score_1 = Score(50,650)
-    pikachu_world.add_object(score_1, 2)
-    score_2 = Score(950, 650)
-    pikachu_world.add_object(score_2, 2)
+    server.score_1 = Score(50,650)
+    pikachu_world.add_object(server.score_1, 2)
+    server.score_2 = Score(950, 650)
+    pikachu_world.add_object(server.score_2, 2)
 
     beach = Beach()
     pikachu_world.add_object(beach, 0)
@@ -43,11 +44,11 @@ def init():
     net = Net()
     pikachu_world.add_object(net, 2)
 
-    #wave = Wave()
-    #pikachu_world.add_object(wave, 1)
+    wave = Wave()
+    pikachu_world.add_object(wave, 1)
 
-    #clouds = [Cloud(random.randint(0,1130), random.randint(400,700)) for _ in range(10)]
-    #pikachu_world.add_objects(clouds, 1)
+    clouds = [Cloud(random.randint(0,1130), random.randint(400,700)) for _ in range(10)]
+    pikachu_world.add_objects(clouds, 1)
 
     pikachu = Pikachu()
     pikachu_world.add_object(pikachu, 2)
@@ -75,8 +76,6 @@ def finish():
 def update():
     pikachu_world.update()
     pikachu_world.handle_collisions()
-    #if monster_ball.y <= 150:
-    #    game_framework.change_mode(play_mode)
 
 def draw():
     clear_canvas()
