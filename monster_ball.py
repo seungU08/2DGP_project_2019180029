@@ -18,6 +18,7 @@ class Monster_ball:
         self.x, self.y = start_x, 500
         self.frame = 0
         self.speed_x, self.speed_y = 0, -1
+        self.hit_x = None
 
     def update(self):
         self.frame = (self.frame + FRAMES_PER_ACTION * ACTION_PER_TIME * game_framework.frame_time) % 5
@@ -35,6 +36,11 @@ class Monster_ball:
 
     def draw(self):
         self.image.clip_draw(int(self.frame) * 100, 0, 100, 100, self.x, self.y)
+        if self.y <= 155:
+            if self.hit_x == None:
+                self.hit_x = self.x
+            else:
+                self.image.clip_draw(6 * 100, 0, 100, 100, self.hit_x, 100)
         #draw_rectangle(*self.get_bb())
 
 
