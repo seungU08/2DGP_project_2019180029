@@ -19,6 +19,7 @@ class Monster_ball:
         self.frame = 0
         self.speed_x, self.speed_y = 0, -1
         self.hit_x = None
+        self.game = 0
 
     def update(self):
         self.frame = (self.frame + FRAMES_PER_ACTION * ACTION_PER_TIME * game_framework.frame_time) % 5
@@ -29,14 +30,18 @@ class Monster_ball:
         self.speed_y -= 0.03
         if self.x <= 25 or self.x >= 975:
             self.speed_x = -self.speed_x
-        if self.y >= 675 or self.y <= 150:
+        if self.y >= 675:
             self.speed_y = -self.speed_y
+        if self.y <= 150:
+            self.speed_y = -self.speed_y/2
         self.speed_x = clamp(-10, self.speed_x, 10)
         self.speed_y = clamp(-10, self.speed_y, 10)
 
     def draw(self):
         self.image.clip_draw(int(self.frame) * 100, 0, 100, 100, self.x, self.y)
-        if self.y <= 155:
+        if self.game == 0 and self.y <= 155:
+            self.game = 1
+        if self.game == 1:
             if self.hit_x == None:
                 self.hit_x = self.x
             else:

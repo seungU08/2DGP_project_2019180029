@@ -83,7 +83,7 @@ def finish():
 def update():
     global start_ball, monster_ball
     if monster_ball.y <= 150:
-        if monster_ball.x <=500:
+        if monster_ball.x <= 500:
             server.score_2.count +=1
             server.winner = '2p'
             print('2p win')
@@ -91,6 +91,11 @@ def update():
             server.score_1.count +=1
             server.winner = '1p'
             print('1p win')
+        for i in range(100):
+            monster_ball.update()
+            draw()
+            delay(0.01)
+
         game_framework.change_mode(game_start)
     pikachu_world.update()
     pikachu_world.handle_collisions()
