@@ -1,6 +1,7 @@
 from pico2d import *
 
 import game_framework
+import game_over
 import game_start
 import pikachu_world
 import pause_mode
@@ -26,6 +27,8 @@ def handle_events():
             game_framework.push_mode(pause_mode)
         elif event.type == SDL_KEYDOWN and event.key == SDLK_r:
             game_framework.change_mode(play_mode)
+        elif event.type == SDL_KEYDOWN and event.key == SDLK_1:
+            server.score_1.count +=1
         else:
             pikachu.handle_event(event)
             pikachu_2.handle_event(event)
@@ -35,10 +38,10 @@ def init():
     global beach, net, wave, clouds, pikachu, pikachu_2, monster_ball
 
     if server.score_1 == None:
-        server.score_1 = Score(100, 600)
+        server.score_1 = Score(100, 600, 0)
     pikachu_world.add_object(server.score_1, 2)
     if server.score_2 == None:
-        server.score_2 = Score(900,600)
+        server.score_2 = Score(900,600, 0)
     pikachu_world.add_object(server.score_2, 2)
 
     beach = Beach()
@@ -47,11 +50,11 @@ def init():
     net = Net()
     pikachu_world.add_object(net, 2)
 
-    #wave = Wave()
-    #pikachu_world.add_object(wave, 1)
+    wave = Wave()
+    pikachu_world.add_object(wave, 1)
 
-    #clouds = [Cloud(random.randint(0,1130), random.randint(400,700)) for _ in range(10)]
-    #pikachu_world.add_objects(clouds, 1)
+    clouds = [Cloud(random.randint(0,1130), random.randint(400,700)) for _ in range(10)]
+    pikachu_world.add_objects(clouds, 1)
 
     pikachu = Pikachu()
     pikachu_world.add_object(pikachu, 2)
@@ -82,6 +85,10 @@ def finish():
 
 def update():
     global start_ball, monster_ball
+
+    pikachu_world.update()
+    pikachu_world.handle_collisions()
+
     if monster_ball.y <= 150:
         if monster_ball.x <= 500:
             server.score_2.count +=1
@@ -95,10 +102,11 @@ def update():
             monster_ball.update()
             draw()
             delay(0.01)
+        if server.score_2.count > 9 or server.score_1.count > 9:
+            game_framework.change_mode(game_over)
+        else:
+            game_framework.change_mode(game_start)
 
-        game_framework.change_mode(game_start)
-    pikachu_world.update()
-    pikachu_world.handle_collisions()
 
 def draw():
     clear_canvas()

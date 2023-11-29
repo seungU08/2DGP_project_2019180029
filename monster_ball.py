@@ -39,7 +39,7 @@ class Monster_ball:
 
     def draw(self):
         self.image.clip_draw(int(self.frame) * 100, 0, 100, 100, self.x, self.y)
-        if self.game == 0 and self.y <= 155:
+        if self.game == 0 and self.y <= 151:
             self.game = 1
         if self.game == 1:
             if self.hit_x == None:

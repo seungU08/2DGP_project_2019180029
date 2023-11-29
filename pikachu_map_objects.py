@@ -57,16 +57,16 @@ class Cloud:
         self.image.draw(self.x, self.y)
 
 class Score:
-    def __init__(self, x, y):
+    def __init__(self, x, y, c):
         self.image = load_image('resource\\score.png')
         self.x = x
         self.y = y
-        self.count = 0
+        self.count = c
 
     def update(self):
         pass
 
     def draw(self):
-        self.image.clip_draw((self.count % 9) * 30, 0, 30, 30, self.x, self.y, 50, 50)
+        self.image.clip_draw((self.count % 10) * 30, 0, 30, 30, self.x, self.y, 50, 50)
 
 
