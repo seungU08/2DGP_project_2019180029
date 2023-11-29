@@ -53,7 +53,7 @@ def init():
     wave = Wave()
     pikachu_world.add_object(wave, 1)
 
-    clouds = [Cloud(random.randint(0,1130), random.randint(400,700)) for _ in range(10)]
+    clouds = [Cloud(random.randint(0,1000), random.randint(400,700)) for _ in range(10)]
     pikachu_world.add_objects(clouds, 1)
 
     pikachu = Pikachu()
