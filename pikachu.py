@@ -47,11 +47,7 @@ FRAMES_PER_ACTION = 5
 class Jump:
     @staticmethod
     def enter(pikachu, e):
-        if right_down(e) or right_up(e):
-            pikachu.speed_x = 1
-        elif left_down(e) or left_up(e):
-            pikachu.speed_x = -1
-        elif up_up(e) or up_down(e):
+        if up_down(e):
             pikachu.speed_y = 5
         pikachu.action = 2
 
@@ -83,14 +79,84 @@ class Jump:
         pikachu.image.clip_draw(int(pikachu.frame) * 100, pikachu.action * 100, 100, 100, pikachu.x, pikachu.y)
         pass
 
-
-class Run:
+class Jump_right:
     @staticmethod
     def enter(pikachu, e):
-        if right_down(e) or left_up(e):
-            pikachu.speed_x, pikachu.action = 1, 3
-        elif left_down(e) or right_up(e):
-            pikachu.speed_x, pikachu.action = -1, 3
+        if up_down(e):
+            pikachu.speed_y = 5
+        pikachu.speed_x = 1
+        pikachu.action = 2
+        pass
+
+    @staticmethod
+    def exit(pikachu, e):
+        if g_down(e):
+            pikachu.hit_ball()
+        pass
+
+    @staticmethod
+    def do(pikachu):
+        pikachu.frame = (pikachu.frame + FRAMES_PER_ACTION * (ACTION_PER_TIME*2) * game_framework.frame_time) % 4
+        pikachu.x += pikachu.speed_x * RUN_SPEED_PPS * game_framework.frame_time
+        pikachu.x = clamp(50, pikachu.x, 500 - 50)
+
+        if pikachu.speed_y != 0:
+            pikachu.y += pikachu.speed_y * RUN_SPEED_PPS * game_framework.frame_time
+            pikachu.speed_y = pikachu.speed_y - 0.03
+        if pikachu.y < 150:
+            pikachu.speed_y = 0
+            pikachu.state_machine.handle_event(('y==150', 0))
+
+        pass
+
+    @staticmethod
+    def draw(pikachu):
+        pikachu.image.clip_draw(int(pikachu.frame) * 100, pikachu.action * 100, 100, 100, pikachu.x, pikachu.y)
+        pass
+
+
+class Jump_left:
+    @staticmethod
+    def enter(pikachu, e):
+        if up_down(e):
+            pikachu.speed_y = 5
+        pikachu.speed_x = -1
+        pikachu.action = 2
+        pass
+
+    @staticmethod
+    def exit(pikachu, e):
+        if g_down(e):
+            pikachu.hit_ball()
+        pass
+
+    @staticmethod
+    def do(pikachu):
+        pikachu.frame = (pikachu.frame + FRAMES_PER_ACTION * (ACTION_PER_TIME * 2) * game_framework.frame_time) % 4
+        pikachu.x += pikachu.speed_x * RUN_SPEED_PPS * game_framework.frame_time
+        pikachu.x = clamp(50, pikachu.x, 500 - 50)
+
+        if pikachu.speed_y != 0:
+            pikachu.y += pikachu.speed_y * RUN_SPEED_PPS * game_framework.frame_time
+            pikachu.speed_y = pikachu.speed_y - 0.03
+        if pikachu.y < 150:
+            pikachu.speed_y = 0
+            pikachu.state_machine.handle_event(('y==150', 0))
+
+        pass
+
+    @staticmethod
+    def draw(pikachu):
+        pikachu.image.clip_draw(int(pikachu.frame) * 100, pikachu.action * 100, 100, 100, pikachu.x, pikachu.y)
+        pass
+
+
+
+
+class Run_right:
+    @staticmethod
+    def enter(pikachu, e):
+        pikachu.speed_x, pikachu.action = 1, 3
         pass
 
     @staticmethod
@@ -110,6 +176,28 @@ class Run:
         pikachu.image.clip_draw(int(pikachu.frame) * 100, pikachu.action * 100, 100, 100, pikachu.x, pikachu.y)
         pass
 
+class Run_left:
+    @staticmethod
+    def enter(pikachu, e):
+        pikachu.speed_x, pikachu.action = -1, 3
+        pass
+
+    @staticmethod
+    def exit(pikachu, e):
+        if g_down(e):
+            pikachu.hit_ball()
+        pass
+
+    @staticmethod
+    def do(pikachu):
+        pikachu.frame = (pikachu.frame + FRAMES_PER_ACTION * ACTION_PER_TIME * game_framework.frame_time) % 8
+        pikachu.x += pikachu.speed_x * RUN_SPEED_PPS * game_framework.frame_time
+        pikachu.x = clamp(25, pikachu.x, 500 - 25)
+
+    @staticmethod
+    def draw(pikachu):
+        pikachu.image.clip_draw(int(pikachu.frame) * 100, pikachu.action * 100, 100, 100, pikachu.x, pikachu.y)
+        pass
 
 class Idle:
     @staticmethod
@@ -143,9 +231,12 @@ class StateMachine:
         self.pikachu = pikachu
         self.cur_state = Idle
         self.transitions = {
-            Idle: {right_down: Run, left_down: Run, left_up: Run, right_up: Run, up_down: Jump, g_down: Idle},
-            Run: {right_down: Idle, left_down: Idle, right_up: Idle, left_up: Idle, up_down: Jump, g_down: Run},
-            Jump: {right_down: Jump, left_down: Jump, left_up: Jump, right_up: Jump, y_150: Idle, g_down: Jump}
+            Idle: {right_down: Run_right, left_down: Run_left, left_up: Run_right, right_up: Run_left, up_down: Jump, g_down: Idle},
+            Run_right: {right_down: Run_right, left_down: Idle, right_up: Idle, left_up: Run_right, up_down: Jump_right, g_down: Run_right},
+            Run_left: {right_down: Idle, left_down: Run_left, right_up: Run_left, left_up: Idle, up_down: Jump_left, g_down: Run_right},
+            Jump: {right_down: Jump_right, left_down: Jump_left, left_up: Jump_right, right_up: Jump_left, y_150: Idle, g_down: Jump},
+            Jump_right: {right_down: Jump_right, left_down: Jump, left_up: Jump_right, right_up: Jump, y_150: Run_right, g_down: Jump_right},
+            Jump_left: {right_down: Jump, left_down: Jump_left, left_up: Jump, right_up: Jump_left, y_150: Run_left, g_down: Jump_left}
         }
 
     def start(self):
