@@ -52,7 +52,7 @@ class Monster_ball:
             self.speed_x += (self.x - play_mode.pikachu_2.x) / 50
             self.speed_y += (self.y - (play_mode.pikachu_2.y-10)) / 50
         if group == 'monster_ball:net':
-            if self.y - 50 >= 220 + 40:
+            if self.y - 50 >= 220 + 140:
                 self.speed_y = -self.speed_y
             else:
                 self.speed_x = -self.speed_x

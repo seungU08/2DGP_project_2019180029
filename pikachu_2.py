@@ -2,6 +2,7 @@ from pico2d import *
 import game_framework
 import pikachu_world
 
+
 def right_down(e):
     return e[0] == 'INPUT' and e[1].type == SDL_KEYDOWN and e[1].key == SDLK_RIGHT
 
@@ -25,17 +26,16 @@ def up_down(e):
 def up_up(e):
     return e[0] == 'INPUT' and e[1].type == SDL_KEYUP and e[1].key == SDLK_UP
 
+
 def y_150(e):
     return e[0] == 'y==150'
+
 
 def l_down(e):
     return e[0] == 'INPUT' and e[1].type == SDL_KEYDOWN and e[1].key == SDLK_l
 
 
-
-
-
-PIXEL_PER_METER = (1000/18)
+PIXEL_PER_METER = (1000 / 18)
 RUN_SPEED_KMPH = 12.0
 RUN_SPEED_MPM = (RUN_SPEED_KMPH * 1000.0 / 60.0)
 RUN_SPEED_MPS = (RUN_SPEED_MPM / 60.0)
@@ -49,14 +49,9 @@ FRAMES_PER_ACTION = 5
 class Jump:
     @staticmethod
     def enter(pikachu_2, e):
-        if right_down(e) or right_up(e):
-            pikachu_2.speed_x = 1
-        elif left_down(e) or left_up(e):
-            pikachu_2.speed_x = -1
-        elif up_up(e) or up_down(e):
+        if up_down(e):
             pikachu_2.speed_y = 5
         pikachu_2.action = 2
-        pass
 
     @staticmethod
     def exit(pikachu_2, e):
@@ -66,9 +61,9 @@ class Jump:
 
     @staticmethod
     def do(pikachu_2):
-        pikachu_2.frame = (pikachu_2.frame + FRAMES_PER_ACTION*2 * ACTION_PER_TIME * game_framework.frame_time) % 4
+        pikachu_2.frame = (pikachu_2.frame + FRAMES_PER_ACTION * 2 * ACTION_PER_TIME * game_framework.frame_time) % 4
         pikachu_2.x += pikachu_2.speed_x * RUN_SPEED_PPS * game_framework.frame_time
-        pikachu_2.x = clamp(500+25, pikachu_2.x, 1000 - 25)
+        pikachu_2.x = clamp(500 + 25, pikachu_2.x, 1000 - 25)
 
         if pikachu_2.speed_y != 0:
             pikachu_2.y += pikachu_2.speed_y * RUN_SPEED_PPS * game_framework.frame_time
@@ -81,17 +76,17 @@ class Jump:
 
     @staticmethod
     def draw(pikachu_2):
-        pikachu_2.image.clip_composite_draw(int(pikachu_2.frame) * 100,int(pikachu_2.action) * 100, 100, 100, 0, 'h', pikachu_2.x, pikachu_2.y, 100, 100)
+        pikachu_2.image.clip_composite_draw(int(pikachu_2.frame) * 100, int(pikachu_2.action) * 100, 100, 100, 0, 'h',
+                                            pikachu_2.x, pikachu_2.y, 100, 100)
 
 
-
-class Run:
+class Jump_right:
     @staticmethod
     def enter(pikachu_2, e):
-        if right_down(e) or left_up(e):
-            pikachu_2.speed_x, pikachu_2.action = 1, 3
-        elif left_down(e) or right_up(e):
-            pikachu_2.speed_x, pikachu_2.action = -1, 3
+        if up_down(e):
+            pikachu_2.speed_y = 5
+        pikachu_2.speed_x = 1
+        pikachu_2.action = 2
         pass
 
     @staticmethod
@@ -102,16 +97,107 @@ class Run:
 
     @staticmethod
     def do(pikachu_2):
+        pikachu_2.frame = (pikachu_2.frame + FRAMES_PER_ACTION * 2 * ACTION_PER_TIME * game_framework.frame_time) % 4
+        pikachu_2.x += pikachu_2.speed_x * RUN_SPEED_PPS * game_framework.frame_time
+        pikachu_2.x = clamp(500 + 25, pikachu_2.x, 1000 - 25)
 
+        if pikachu_2.speed_y != 0:
+            pikachu_2.y += pikachu_2.speed_y * RUN_SPEED_PPS * game_framework.frame_time
+            pikachu_2.speed_y = pikachu_2.speed_y - 0.03
+        if pikachu_2.y < 150:
+            pikachu_2.speed_y = 0
+            pikachu_2.state_machine.handle_event(('y==150', 0))
+
+        pass
+
+    @staticmethod
+    def draw(pikachu_2):
+        pikachu_2.image.clip_composite_draw(int(pikachu_2.frame) * 100, int(pikachu_2.action) * 100, 100, 100, 0, 'h',
+                                            pikachu_2.x, pikachu_2.y, 100, 100)
+
+
+class Jump_left:
+    @staticmethod
+    def enter(pikachu_2, e):
+        if up_down(e):
+            pikachu_2.speed_y = 5
+        pikachu_2.speed_x = -1
+        pikachu_2.action = 2
+        pass
+
+    @staticmethod
+    def exit(pikachu_2, e):
+        if l_down(e):
+            pikachu_2.hit_ball()
+        pass
+
+    @staticmethod
+    def do(pikachu_2):
+        pikachu_2.frame = (pikachu_2.frame + FRAMES_PER_ACTION * 2 * ACTION_PER_TIME * game_framework.frame_time) % 4
+        pikachu_2.x += pikachu_2.speed_x * RUN_SPEED_PPS * game_framework.frame_time
+        pikachu_2.x = clamp(500 + 25, pikachu_2.x, 1000 - 25)
+
+        if pikachu_2.speed_y != 0:
+            pikachu_2.y += pikachu_2.speed_y * RUN_SPEED_PPS * game_framework.frame_time
+            pikachu_2.speed_y = pikachu_2.speed_y - 0.03
+        if pikachu_2.y < 150:
+            pikachu_2.speed_y = 0
+            pikachu_2.state_machine.handle_event(('y==150', 0))
+
+        pass
+
+    @staticmethod
+    def draw(pikachu_2):
+        pikachu_2.image.clip_composite_draw(int(pikachu_2.frame) * 100, int(pikachu_2.action) * 100, 100, 100, 0, 'h',
+                                            pikachu_2.x, pikachu_2.y, 100, 100)
+
+
+class Run_right:
+    @staticmethod
+    def enter(pikachu_2, e):
+        pikachu_2.speed_x, pikachu_2.action = 1, 3
+        pass
+
+    @staticmethod
+    def exit(pikachu_2, e):
+        if l_down(e):
+            pikachu_2.hit_ball()
+        pass
+
+    @staticmethod
+    def do(pikachu_2):
         pikachu_2.frame = (pikachu_2.frame + FRAMES_PER_ACTION * ACTION_PER_TIME * game_framework.frame_time) % 8
         pikachu_2.x += pikachu_2.speed_x * RUN_SPEED_PPS * game_framework.frame_time
         pikachu_2.x = clamp(525, pikachu_2.x, 975)
 
     @staticmethod
     def draw(pikachu_2):
-        pikachu_2.image.clip_composite_draw(int(pikachu_2.frame) * 100,int(pikachu_2.action) * 100, 100, 100, 0, 'h', pikachu_2.x, pikachu_2.y, 100, 100)
+        pikachu_2.image.clip_composite_draw(int(pikachu_2.frame) * 100, int(pikachu_2.action) * 100, 100, 100, 0, 'h',
+                                            pikachu_2.x, pikachu_2.y, 100, 100)
 
 
+class Run_left:
+    @staticmethod
+    def enter(pikachu_2, e):
+        pikachu_2.speed_x, pikachu_2.action = -1, 3
+        pass
+
+    @staticmethod
+    def exit(pikachu_2, e):
+        if l_down(e):
+            pikachu_2.hit_ball()
+        pass
+
+    @staticmethod
+    def do(pikachu_2):
+        pikachu_2.frame = (pikachu_2.frame + FRAMES_PER_ACTION * ACTION_PER_TIME * game_framework.frame_time) % 8
+        pikachu_2.x += pikachu_2.speed_x * RUN_SPEED_PPS * game_framework.frame_time
+        pikachu_2.x = clamp(525, pikachu_2.x, 975)
+
+    @staticmethod
+    def draw(pikachu_2):
+        pikachu_2.image.clip_composite_draw(int(pikachu_2.frame) * 100, int(pikachu_2.action) * 100, 100, 100, 0, 'h',
+                                            pikachu_2.x, pikachu_2.y, 100, 100)
 
 
 class Idle:
@@ -121,8 +207,6 @@ class Idle:
         pikachu_2.speed_x = 0
         pikachu_2.frame = 0
 
-
-
     @staticmethod
     def exit(pikachu_2, e):
         if l_down(e):
@@ -137,7 +221,8 @@ class Idle:
 
     @staticmethod
     def draw(pikachu_2):
-        pikachu_2.image.clip_composite_draw(int(pikachu_2.frame) * 100,int(pikachu_2.action) * 100, 100, 100, 0, 'h', pikachu_2.x, pikachu_2.y, 100, 100)
+        pikachu_2.image.clip_composite_draw(int(pikachu_2.frame) * 100, int(pikachu_2.action) * 100, 100, 100, 0, 'h',
+                                            pikachu_2.x, pikachu_2.y, 100, 100)
 
 
 class StateMachine:
@@ -145,9 +230,12 @@ class StateMachine:
         self.pikachu_2 = pikachu_2
         self.cur_state = Idle
         self.transitions = {
-            Idle: {right_down: Run, left_down: Run, left_up: Run, right_up: Run, up_down: Jump, l_down: Idle},
-            Run: {right_down: Idle, left_down: Idle, right_up: Idle, left_up: Idle, up_down: Jump, l_down: Run},
-            Jump: {right_down: Jump, left_down: Jump, left_up: Jump, right_up: Jump, y_150: Idle, l_down: Jump}
+            Idle: {right_down: Run_right, left_down: Run_left, left_up: Run_right, right_up: Run_left, up_down: Jump, l_down: Idle},
+            Run_right: {right_down: Run_right, left_down: Idle, right_up: Idle, left_up: Run_right, up_down: Jump_right, l_down: Run_right},
+            Run_left: {right_down: Idle, left_down: Run_left, right_up: Run_left, left_up: Idle, up_down: Jump_left, l_down: Run_right},
+            Jump: {right_down: Jump_right, left_down: Jump_left, left_up: Jump_right, right_up: Jump_left, y_150: Idle, l_down: Jump},
+            Jump_right: {right_down: Jump_right, left_down: Jump, left_up: Jump_right, right_up: Jump, y_150: Run_right, l_down: Jump_right},
+            Jump_left: {right_down: Jump, left_down: Jump_left, left_up: Jump, right_up: Jump_left, y_150: Run_left, l_down: Jump_left}
         }
 
     def start(self):
@@ -192,7 +280,7 @@ class Pikachu_2:
 
     def draw(self):
         self.state_machine.draw()
-        #draw_rectangle(*self.get_bb())
+        # draw_rectangle(*self.get_bb())
 
     def hit_ball(self):
         pass
