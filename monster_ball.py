@@ -12,6 +12,7 @@ TIME_PER_ACTION = 0.5
 ACTION_PER_TIME = 1.0 / TIME_PER_ACTION
 FRAMES_PER_ACTION = 7
 
+
 class Monster_ball:
     def __init__(self, start_x):
         self.image = load_image('resource\\monster_ball.png')
@@ -27,8 +28,8 @@ class Monster_ball:
         self.frame = (self.frame + FRAMES_PER_ACTION * ACTION_PER_TIME * game_framework.frame_time) % 5
         self.y += self.speed_y * RUN_SPEED_PPS * game_framework.frame_time
         self.x += self.speed_x * RUN_SPEED_PPS * game_framework.frame_time
-        self.x = clamp(25-1, self.x, 975+1)
-        self.y = clamp(150 - 1, self.y, 675+1)
+        self.x = clamp(25 - 1, self.x, 975 + 1)
+        self.y = clamp(150 - 1, self.y, 675 + 1)
         self.speed_y -= 0.03
         if self.x <= 25 or self.x >= 975:
             self.speed_x = -self.speed_x
@@ -36,7 +37,7 @@ class Monster_ball:
             self.speed_y = -self.speed_y
         if self.y <= 150:
             self.crashing_sound.play()
-            self.speed_y = -self.speed_y/2
+            self.speed_y = -self.speed_y / 2
         self.speed_x = clamp(-10, self.speed_x, 10)
         self.speed_y = clamp(-10, self.speed_y, 10)
 
@@ -49,9 +50,7 @@ class Monster_ball:
                 self.hit_x = self.x
             else:
                 self.image.clip_draw(6 * 100, 0, 100, 100, self.hit_x, 100)
-        #draw_rectangle(*self.get_bb())
-
-
+        # draw_rectangle(*self.get_bb())
 
     def get_bb(self):
         return self.x - 50, self.y - 50, self.x + 50, self.y + 50
@@ -59,12 +58,12 @@ class Monster_ball:
     def handle_collision(self, group, a):
         if group == 'pikachu:monster_ball':
             self.speed_x += (self.x - play_mode.pikachu.x) / 50
-            self.speed_y += (self.y - (play_mode.pikachu.y-10)) / 50
+            self.speed_y += (self.y - (play_mode.pikachu.y - 10)) / 50
             self.y += self.speed_y * RUN_SPEED_PPS * game_framework.frame_time
             self.x += self.speed_x * RUN_SPEED_PPS * game_framework.frame_time
         if group == 'pikachu_2:monster_ball':
             self.speed_x += (self.x - play_mode.pikachu_2.x) / 50
-            self.speed_y += (self.y - (play_mode.pikachu_2.y-10)) / 50
+            self.speed_y += (self.y - (play_mode.pikachu_2.y - 10)) / 50
         if group == 'monster_ball:net':
             if self.y - 50 >= 220 + 140:
                 self.speed_y = -self.speed_y

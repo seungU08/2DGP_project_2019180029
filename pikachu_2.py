@@ -239,12 +239,18 @@ class StateMachine:
         self.pikachu_2 = pikachu_2
         self.cur_state = Idle
         self.transitions = {
-            Idle: {right_down: Run_right, left_down: Run_left, left_up: Run_right, right_up: Run_left, up_down: Jump, l_down: Idle},
-            Run_right: {right_down: Run_right, left_down: Idle, right_up: Idle, left_up: Run_right, up_down: Jump_right, l_down: Run_right},
-            Run_left: {right_down: Idle, left_down: Run_left, right_up: Run_left, left_up: Idle, up_down: Jump_left, l_down: Run_right},
-            Jump: {right_down: Jump_right, left_down: Jump_left, left_up: Jump_right, right_up: Jump_left, y_150: Idle, l_down: Jump},
-            Jump_right: {right_down: Jump_right, left_down: Jump, left_up: Jump_right, right_up: Jump, y_150: Run_right, l_down: Jump_right},
-            Jump_left: {right_down: Jump, left_down: Jump_left, left_up: Jump, right_up: Jump_left, y_150: Run_left, l_down: Jump_left}
+            Idle: {right_down: Run_right, left_down: Run_left, left_up: Run_right, right_up: Run_left, up_down: Jump,
+                   l_down: Idle},
+            Run_right: {right_down: Run_right, left_down: Idle, right_up: Idle, left_up: Run_right, up_down: Jump_right,
+                        l_down: Run_right},
+            Run_left: {right_down: Idle, left_down: Run_left, right_up: Run_left, left_up: Idle, up_down: Jump_left,
+                       l_down: Run_right},
+            Jump: {right_down: Jump_right, left_down: Jump_left, left_up: Jump_right, right_up: Jump_left, y_150: Idle,
+                   l_down: Jump},
+            Jump_right: {right_down: Jump_right, left_down: Jump, left_up: Jump_right, right_up: Jump, y_150: Run_right,
+                         l_down: Jump_right},
+            Jump_left: {right_down: Jump, left_down: Jump_left, left_up: Jump, right_up: Jump_left, y_150: Run_left,
+                        l_down: Jump_left}
         }
 
     def start(self):

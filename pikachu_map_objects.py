@@ -13,7 +13,7 @@ class Net:
 
     def draw(self):
         self.image.draw(500, 220)
-        #draw_rectangle(*self.get_bb())
+        # draw_rectangle(*self.get_bb())
 
     def get_bb(self):
         return 500 - 3, 220 - 140, 500 + 3, 220 + 140
@@ -38,23 +38,24 @@ class Wave:
     def draw(self):
         self.image.draw(500, self.y)
 
+
 class Cloud:
-    def __init__(self,x,y):
+    def __init__(self, x, y):
         self.image = load_image('resource\\cloud.png')
         self.x = x
         self.y = y
         self.speed = random.randint(1, 5)
 
     def update(self):
-        self.x = self.x + self.speed/5
+        self.x = self.x + self.speed / 5
         if self.x >= 1000:
             self.x = -100
-            self.y = random.randint(400,700)
+            self.y = random.randint(400, 700)
             self.speed = random.randint(1, 5)
-
 
     def draw(self):
         self.image.draw(self.x, self.y)
+
 
 class Score:
     def __init__(self, x, y, c):
@@ -69,6 +70,7 @@ class Score:
     def draw(self):
         self.image.clip_draw((self.count % 10) * 30, 0, 30, 30, self.x, self.y, 50, 50)
 
+
 class Game_over_pikachu:
     def __init__(self, x, a):
         self.image = load_image('resource\\game_over_pikachu.png')
@@ -79,10 +81,8 @@ class Game_over_pikachu:
 
     def update(self):
         if self.frame < 4:
-            self.frame +=1
+            self.frame += 1
             delay(0.1)
 
     def draw(self):
         self.image.clip_draw((self.frame % 5) * 100, self.action * 100, 100, 100, self.x, self.y, 100, 100)
-
-

@@ -6,7 +6,6 @@ import play_mode
 
 
 def handle_events():
-
     events = get_events()
     for event in events:
         if event.type == SDL_QUIT:
@@ -30,8 +29,10 @@ def init():
 def finish():
     pass
 
+
 def update():
     pass
+
 
 def draw():
     clear_canvas()
@@ -39,8 +40,10 @@ def draw():
     image_2.draw(500, 400)
     update_canvas()
 
+
 def pause():
     pass
+
 
 def resume():
     pass

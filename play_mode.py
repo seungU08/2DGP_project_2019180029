@@ -28,9 +28,9 @@ def handle_events():
         elif event.type == SDL_KEYDOWN and event.key == SDLK_r:
             game_framework.change_mode(play_mode)
         elif event.type == SDL_KEYDOWN and event.key == SDLK_1:
-            server.score_1.count +=1
+            server.score_1.count += 1
         elif event.type == SDL_KEYDOWN and event.key == SDLK_2:
-            server.score_2.count +=1
+            server.score_2.count += 1
         else:
             pikachu.handle_event(event)
             pikachu_2.handle_event(event)
@@ -43,7 +43,7 @@ def init():
         server.score_1 = Score(100, 600, 0)
     pikachu_world.add_object(server.score_1, 2)
     if server.score_2 == None:
-        server.score_2 = Score(900,600, 0)
+        server.score_2 = Score(900, 600, 0)
     pikachu_world.add_object(server.score_2, 2)
 
     beach = Beach()
@@ -55,7 +55,7 @@ def init():
     wave = Wave()
     pikachu_world.add_object(wave, 1)
 
-    clouds = [Cloud(random.randint(0,1000), random.randint(400,700)) for _ in range(10)]
+    clouds = [Cloud(random.randint(0, 1000), random.randint(400, 700)) for _ in range(10)]
     pikachu_world.add_objects(clouds, 1)
 
     pikachu = Pikachu()
@@ -79,11 +79,13 @@ def init():
     pikachu_world.add_collision_pair('pikachu_2:monster_ball', pikachu_2, None)
     pikachu_world.add_collision_pair('pikachu_2:monster_ball', None, monster_ball)
 
-    pikachu_world.add_collision_pair('monster_ball:net',monster_ball, None)
+    pikachu_world.add_collision_pair('monster_ball:net', monster_ball, None)
     pikachu_world.add_collision_pair('monster_ball:net', None, net)
+
 
 def finish():
     pikachu_world.clear()
+
 
 def update():
     global start_ball, monster_ball
@@ -93,11 +95,11 @@ def update():
 
     if monster_ball.y <= 150:
         if monster_ball.x <= 500:
-            server.score_2.count +=1
+            server.score_2.count += 1
             server.winner = '2p'
             print('2p win')
         else:
-            server.score_1.count +=1
+            server.score_1.count += 1
             server.winner = '1p'
             print('1p win')
         for i in range(100):
@@ -117,8 +119,10 @@ def draw():
     pikachu_world.render()
     update_canvas()
 
+
 def pause():
     pass
+
 
 def resume():
     pass

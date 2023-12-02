@@ -58,12 +58,13 @@ def finish():
     server.winner = None
     pikachu_world.clear()
 
-
     pass
+
 
 def update():
     pikachu_world.update()
     pass
+
 
 def draw():
     clear_canvas()
@@ -71,8 +72,10 @@ def draw():
     image.draw(500, 400)
     update_canvas()
 
+
 def pause():
     pass
+
 
 def resume():
     pass
