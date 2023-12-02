@@ -18,8 +18,9 @@ def handle_events():
 
 
 def init():
-    global image
+    global image, image_2
     image = load_image('resource\\title.png')
+    image_2 = load_image('resource\\continue.png')
     pass
 
 def finish():
@@ -31,6 +32,7 @@ def update():
 def draw():
     clear_canvas()
     image.draw(500, 350)
+    image_2.draw(500, 400)
     update_canvas()
 
 def pause():

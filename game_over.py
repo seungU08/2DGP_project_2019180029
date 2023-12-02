@@ -22,6 +22,7 @@ def handle_events():
 
 
 def init():
+    global image
     if server.winner == '1p':
         winner_pikachu = Game_over_pikachu(200, 1)
         loser_pikachu = Game_over_pikachu(800, 0)
@@ -43,7 +44,8 @@ def init():
 
     clouds = [Cloud(random.randint(0, 1000), random.randint(400, 700)) for _ in range(10)]
     pikachu_world.add_objects(clouds, 1)
-    pass
+
+    image = load_image('resource\\continue.png')
 
 def finish():
     server.score_1 = None
@@ -59,6 +61,7 @@ def update():
 def draw():
     clear_canvas()
     pikachu_world.render()
+    image.draw(500, 400)
     update_canvas()
 
 def pause():
