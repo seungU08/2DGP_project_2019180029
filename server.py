@@ -5,3 +5,6 @@ from pikachu_map_objects import Score
 score_1 = None
 score_2 = None
 winner = None
+
+loser_p = None
+winner_p = None

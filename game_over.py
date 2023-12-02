@@ -22,6 +22,16 @@ def handle_events():
 
 
 def init():
+    if server.winner == '1p':
+        winner_pikachu = Game_over_pikachu(200, 1)
+        loser_pikachu = Game_over_pikachu(800, 0)
+    else:
+        winner_pikachu = Game_over_pikachu(200, 0)
+        loser_pikachu = Game_over_pikachu(800, 1)
+
+    pikachu_world.add_object(loser_pikachu, 2)
+    pikachu_world.add_object(winner_pikachu, 2)
+
     beach = Beach()
     pikachu_world.add_object(beach, 0)
 

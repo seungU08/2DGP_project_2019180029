@@ -69,4 +69,20 @@ class Score:
     def draw(self):
         self.image.clip_draw((self.count % 10) * 30, 0, 30, 30, self.x, self.y, 50, 50)
 
+class Game_over_pikachu:
+    def __init__(self, x, a):
+        self.image = load_image('resource\\game_over_pikachu.png')
+        self.x = x
+        self.y = 150
+        self.frame = 0
+        self.action = a
+
+    def update(self):
+        if self.frame < 4:
+            self.frame +=1
+            delay(0.1)
+
+    def draw(self):
+        self.image.clip_draw((self.frame % 5) * 100, self.action * 100, 100, 100, self.x, self.y, 100, 100)
+
 

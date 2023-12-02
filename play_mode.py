@@ -29,6 +29,8 @@ def handle_events():
             game_framework.change_mode(play_mode)
         elif event.type == SDL_KEYDOWN and event.key == SDLK_1:
             server.score_1.count +=1
+        elif event.type == SDL_KEYDOWN and event.key == SDLK_2:
+            server.score_2.count +=1
         else:
             pikachu.handle_event(event)
             pikachu_2.handle_event(event)
@@ -102,7 +104,9 @@ def update():
             monster_ball.update()
             draw()
             delay(0.01)
-        if server.score_2.count > 9 or server.score_1.count > 9:
+        if server.score_2.count > 9:
+            game_framework.change_mode(game_over)
+        elif server.score_1.count > 9:
             game_framework.change_mode(game_over)
         else:
             game_framework.change_mode(game_start)
