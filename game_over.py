@@ -22,7 +22,7 @@ def handle_events():
 
 
 def init():
-    global image
+    global image, p_pikachu_sound
     if server.winner == '1p':
         winner_pikachu = Game_over_pikachu(200, 1)
         loser_pikachu = Game_over_pikachu(800, 0)
@@ -47,11 +47,18 @@ def init():
 
     image = load_image('resource\\continue.png')
 
+    p_pikachu_sound = load_wav('resource\\WAVE143_1.wav')
+    p_pikachu_sound.set_volume(32)
+
+
 def finish():
+    p_pikachu_sound.play()
     server.score_1 = None
     server.score_2 = None
     server.winner = None
     pikachu_world.clear()
+
+
     pass
 
 def update():

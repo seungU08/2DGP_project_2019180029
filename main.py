@@ -1,8 +1,8 @@
 
 from pico2d import *
 import game_framework
-import title_mode as start_mode
-#import play_mode as start_mode
+#import title_mode as start_mode
+import play_mode as start_mode
 import server
 
 #import logo_mode as start_mode

@@ -14,14 +14,18 @@ def handle_events():
         elif event.type == SDL_KEYDOWN and event.key == SDLK_ESCAPE:
             game_framework.quit()
         elif (event.type, event.key) == (SDL_KEYDOWN, SDLK_SPACE):
+            wav.play()
             game_framework.change_mode(game_start)
 
 
 def init():
-    global image, image_2
+    global image, image_2, wav
     image = load_image('resource\\title.png')
     image_2 = load_image('resource\\continue.png')
-    pass
+
+    wav = load_wav('resource\\WAVE144_1.wav')
+    wav.set_volume(32)
+
 
 def finish():
     pass

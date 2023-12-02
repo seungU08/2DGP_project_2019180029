@@ -20,6 +20,8 @@ class Monster_ball:
         self.speed_x, self.speed_y = 0, -1
         self.hit_x = None
         self.game = 0
+        self.crashing_sound = load_wav('resource\\WAVE146_1.wav')
+        self.crashing_sound.set_volume(16)
 
     def update(self):
         self.frame = (self.frame + FRAMES_PER_ACTION * ACTION_PER_TIME * game_framework.frame_time) % 5
@@ -33,6 +35,7 @@ class Monster_ball:
         if self.y >= 675:
             self.speed_y = -self.speed_y
         if self.y <= 150:
+            self.crashing_sound.play()
             self.speed_y = -self.speed_y/2
         self.speed_x = clamp(-10, self.speed_x, 10)
         self.speed_y = clamp(-10, self.speed_y, 10)

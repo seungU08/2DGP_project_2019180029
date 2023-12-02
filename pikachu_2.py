@@ -51,6 +51,7 @@ class Jump:
     def enter(pikachu_2, e):
         if up_down(e):
             pikachu_2.speed_y = 5
+            pikachu_2.jump_sound.play()
         pikachu_2.action = 2
 
     @staticmethod
@@ -85,6 +86,7 @@ class Jump_right:
     def enter(pikachu_2, e):
         if up_down(e):
             pikachu_2.speed_y = 5
+            pikachu_2.jump_sound.play()
         pikachu_2.speed_x = 1
         pikachu_2.action = 2
         pass
@@ -121,6 +123,7 @@ class Jump_left:
     def enter(pikachu_2, e):
         if up_down(e):
             pikachu_2.speed_y = 5
+            pikachu_2.jump_sound.play()
         pikachu_2.speed_x = -1
         pikachu_2.action = 2
         pass
@@ -155,6 +158,8 @@ class Jump_left:
 class Run_right:
     @staticmethod
     def enter(pikachu_2, e):
+        if y_150(e):
+            pikachu_2.landing_sound.play()
         pikachu_2.speed_x, pikachu_2.action = 1, 3
         pass
 
@@ -179,6 +184,8 @@ class Run_right:
 class Run_left:
     @staticmethod
     def enter(pikachu_2, e):
+        if y_150(e):
+            pikachu_2.landing_sound.play()
         pikachu_2.speed_x, pikachu_2.action = -1, 3
         pass
 
@@ -203,6 +210,8 @@ class Run_left:
 class Idle:
     @staticmethod
     def enter(pikachu_2, e):
+        if y_150(e):
+            pikachu_2.landing_sound.play()
         pikachu_2.action = 3
         pikachu_2.speed_x = 0
         pikachu_2.frame = 0
@@ -269,6 +278,12 @@ class Pikachu_2:
         self.state_machine = StateMachine(self)
         self.state_machine.start()
         self.move = 0
+        self.jump_sound = load_wav('resource\\WAVE141_1.wav')
+        self.jump_sound.set_volume(32)
+        self.landing_sound = load_wav('resource\\WAVE142_1.wav')
+        self.landing_sound.set_volume(32)
+        self.pikachu_sound = load_wav('resource\\WAVE144_1.wav')
+        self.pikachu_sound.set_volume(32)
 
     def update(self):
         self.state_machine.update()
@@ -283,6 +298,7 @@ class Pikachu_2:
         # draw_rectangle(*self.get_bb())
 
     def hit_ball(self):
+        self.pikachu_sound.play()
         pass
 
     def get_bb(self):

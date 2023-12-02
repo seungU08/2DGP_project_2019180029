@@ -48,6 +48,7 @@ class Jump:
     @staticmethod
     def enter(pikachu, e):
         if up_down(e):
+            pikachu.jump_sound.play()
             pikachu.speed_y = 5
         pikachu.action = 2
 
@@ -83,6 +84,7 @@ class Jump_right:
     @staticmethod
     def enter(pikachu, e):
         if up_down(e):
+            pikachu.jump_sound.play()
             pikachu.speed_y = 5
         pikachu.speed_x = 1
         pikachu.action = 2
@@ -119,6 +121,7 @@ class Jump_left:
     @staticmethod
     def enter(pikachu, e):
         if up_down(e):
+            pikachu.jump_sound.play()
             pikachu.speed_y = 5
         pikachu.speed_x = -1
         pikachu.action = 2
@@ -156,6 +159,8 @@ class Jump_left:
 class Run_right:
     @staticmethod
     def enter(pikachu, e):
+        if y_150(e):
+            pikachu.landing_sound.play()
         pikachu.speed_x, pikachu.action = 1, 3
         pass
 
@@ -179,6 +184,8 @@ class Run_right:
 class Run_left:
     @staticmethod
     def enter(pikachu, e):
+        if y_150(e):
+            pikachu.landing_sound.play()
         pikachu.speed_x, pikachu.action = -1, 3
         pass
 
@@ -202,6 +209,8 @@ class Run_left:
 class Idle:
     @staticmethod
     def enter(pikachu, e):
+        if y_150(e):
+            pikachu.landing_sound.play()
         pikachu.action = 3
         pikachu.speed_x = 0
         pikachu.frame = 0
@@ -270,6 +279,12 @@ class Pikachu:
         self.state_machine = StateMachine(self)
         self.state_machine.start()
         self.move = 0
+        self.jump_sound = load_wav('resource\\WAVE141_1.wav')
+        self.jump_sound.set_volume(32)
+        self.landing_sound = load_wav('resource\\WAVE142_1.wav')
+        self.landing_sound.set_volume(32)
+        self.pikachu_sound = load_wav('resource\\WAVE144_1.wav')
+        self.pikachu_sound.set_volume(32)
 
     def update(self):
         self.state_machine.update()
@@ -285,6 +300,7 @@ class Pikachu:
 
     def hit_ball(self):
         if self.x - play_mode.monster_ball.x < 10:
+            self.pikachu_sound.play()
             pass
         pass
 
